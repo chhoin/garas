@@ -12,6 +12,7 @@ public class UserListDto {
 	private String phone;
 	private String address;
 	
+	
 	public String getAutoNum() {
 		return autoNum;
 	}
