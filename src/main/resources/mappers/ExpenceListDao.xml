@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.smart.garas.dao.ExpenseListDao">
+	<!-- get combo of expense type -->
+	<select id="getComboExpenseType" resultType="ExpenseDto">
+		select
+			expCode, 
+			expType
+		from
+			tblExpence 
+	</select>
+	
+	<!-- Search data of expense -->
+	<select id="getSearchExpense" resultType="ExpenseListDto" statementType="CALLABLE">
+		{
+			CALL PRO_SEARCH_EXPENCE(
+				 #{fromDate},
+				 #{toDate},
+				 #{expCode},
+				 #{currentPage},
+				 #{numPerPage}
+			)
+		}
+	</select>
+</mapper>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.smart.garas.dao.SupplierInvoiceListDao">
+	<!-- get combo of លេខវិក័យបត្រ -->
+	<select id="getComboInvoiceNo" resultType="CaptureDto">
+		select			
+			invoiceNo
+		from
+			tblImport
+		group 
+			by invoiceNo
+	</select>
+	
+	<!-- get combo of ឈ្មោះអ្នកផ្គត់ផ្គង់ -->
+	<select id="getComboSupplierCode" resultType="SupplierDto">
+		select
+			suppCode, 
+			suppKhName
+		from
+			tblSupplier 
+	</select>
+	
+	<!-- get combo of លេខទូរស័ព្ទ -->
+	<select id="getComboSupplierPhone" resultType="SupplierDto">
+		select
+			suppCode, 
+			phone
+		from
+			tblSupplier 
+	</select>
+	
+	<!-- Search data from database -->
+	<select id="getSearchCapList" resultType="SupplierInvoiceListDto" statementType="CALLABLE">
+		{
+			CALL ReportImport(
+				 #{fromDate},
+				 #{toDate},
+				 #{statusAmt},
+				 #{invoiceNo},
+				 #{suppCode},
+				 #{phone},
+				 #{currentPage},
+				 #{numPerPage}
+			)
+		}
+	</select>
+	
+	<!-- Search Products List -->
+	<select id="getSearchSupplierProductList" resultType="SupplierInvoiceListDto" statementType="CALLABLE">
+		{
+			CALL SearchImportDetail(
+				 #{invoiceNo}
+			)
+		}
+	</select>
+	
+	<!-- Search history payments -->
+	<select id="getSearchHisPayment" resultType="PaymentListDto" statementType="CALLABLE">
+		{
+			CALL SearchPayment(
+				 #{invoiceNo}
+			)
+		}
+	</select>
+	
+	<!-- Save Payment -->
+	<select id="save" resultType="PaymentDto" statementType="CALLABLE">
+		{
+			CALL AddPayment(
+				 #{invoiceNo},
+				 #{payDate},
+				 #{amount},
+				 #{curCode},
+				 #{userCode},
+				 #{payStatus}
+			)
+		}
+	</select>
+	
+</mapper>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.smart.garas.dao.CustomerInvoiceDao">
+
+	<!-- Get data from database -->
+	<select id="getAll" resultType="CustomerInvoiceDto">
+		SELECT
+			*
+		FROM
+		 	CUSTOMER_INVOICE
+	</select>
+	
+	<!-- Save into database -->
+	<select id="save" resultType="CustomerInvoiceDto" statementType="CALLABLE">
+		{
+			CALL PROC_ADD_CUSTOMER_INVOICE(
+				#{invoice_NUMBER},
+				#{invoice_DATE},
+				#{pay_OFF_DATE},
+				#{total_AMOUNT},
+				#{payable_AMOUNT},
+				#{input_NAME},
+				#{desc}
+			)
+		}
+	</select>
+	<!-- end of Save into database -->
+	
+	<!-- get data combo box of customer invoice-->
+	<select id="getComboCusInvoice" resultType="CustomerCaptureDto">
+		SELECT
+			invoice_NUM
+		FROM
+		 	CUSTOMER_STOCK_CAPTURE
+	</select>
+	<!-- end of get data combo box -->
+	
+	<!-- get combo of name and phone -->
+	<select id="getComboCusName" resultType="CustomerCaptureDto">
+		SELECT 
+			cus_KH_NAME, 
+			cus_PHONE,
+			ccy
+		FROM 
+			CUSTOMER_STOCK_CAPTURE st  inner join CUSTOMERS cu
+			ON st.cus_ID = cu.cus_ID 
+		WHERE
+			invoice_NUM = #{invoice_NUM}
+	</select>
+	<!-- end of get combo of name and phone -->
+	
+</mapper>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.smart.garas.dao.CategoryDao">
+
+	<!-- get data list -->
+	<select id="getAll" resultType="CategoryDto">
+		SELECT 
+			ROW_NUMBER() OVER(ORDER BY CATEGORIES_CODE ASC) AS auto_NUM,
+			CATEGORIES_CODE,
+			CATEGORIES_NAME,
+			DESCRICPTION,
+			INPUT_NAME,
+			INPUT_DATE
+		FROM 
+			CATEGORIES
+	</select>
+	<!-- end of get data list -->
+	
+	<!-- Save into database -->
+	<select id="save" resultType="CategoryDto" statementType="CALLABLE">
+		{
+			CALL PROC_ADD_CATEGORIES(
+				#{categories_NAME},
+				#{descricption},
+				#{input_NAME}
+			)
+		}
+	</select>
+	<!-- end of Save into database -->
+	
+	<!-- check data be for insert (no duplicated) -->
+	<select id="countById" resultType="Integer">
+		SELECT
+			count(categories_NAME)
+		FROM
+			CATEGORIES
+		<if test="categories_NAME != null and categories_NAME != ''">
+      		WHERE 
+      			categories_NAME = #{categories_NAME}
+      	</if>
+	</select>
+	<!-- end of check data be for insert (no duplicated) -->
+	
+	<!-- delete data from database -->
+	<delete id="deleteById">
+		DELETE FROM
+			CATEGORIES
+		WHERE
+			categories_CODE = #{categories_CODE}
+	</delete>
+	<!-- end of delete data -->
+	<!-- getCategoryByCode -->
+	
+	<select id="getCategoryByCode" resultType="CategoryDto">
+		select * from CATEGORIES where CATEGORIES_CODE = #{categories_CODE};
+	</select>
+	
+</mapper>
+
+
+
+

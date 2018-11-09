@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.smart.garas.dao.SettingConfigueDao">
+
+	<!-- Save into database -->
+	<insert id="save">
+		INSERT INTO CUSTOMER_STOCK_CAPTURE (
+			 INVOICE_NUMBER,
+			 ENTRY_NUM,
+			 CUST_NUMBER,
+			 PRO_TYPE,
+			 STOCK_NUMBER,
+			 INVOICE_DATE,
+			 [STATUS],
+			 QTY,
+			 UNIT   ,
+			 CURRENCY,
+			 UNIT_PRICE  ,
+			 TOTAL_COST_LCY,
+			 TOTAL_COST_FCY,
+			 EXC_RATE,
+			 INPUTTER_NAME,
+			 DATE_TIME 
+			) 
+			VALUES ( 
+				 #{invoice_NUMBER},
+				 #{entry_NUM},
+				 #{cust_NUMBER},
+				 #{pro_TYPE},
+				 #{stock_NUMBER},
+				 #{invoice_DATE},
+				 #{status},
+				 #{qty},
+				 #{unit},
+				 #{currency},
+				 #{unit_PRICE},
+				 #{total_COST_LCY},
+				 #{total_COST_FCY},
+				 #{exchangeRate},
+				 #{inputter_NAME},
+				 #{date_TIME}
+			)
+	</insert> 
+	
+	<update id="update">
+			update td_setting_configue set stcg_value = #{stcg_value} where stcg_code = #{stcg_code}
+	</update>
+		<select id="getSaleInvoiceNumber" resultType="SettingConfigueDto">
+		SELECT
+			stcg_value
+		FROM
+		 	td_setting_configue where stcg_code = 'sale_invoice_num'
+	</select>
+	<!--  getSettingCofigueByCode-->
+	<select id="getSettingCofigueByCode" resultType ="SettingConfigueDto">
+		SELECT * FROM td_setting_configue where stcg_code = #{stcg_code}
+	</select>
+</mapper>

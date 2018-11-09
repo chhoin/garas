@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--@Author Tha.bunsath   -->
+<mapper namespace="com.smart.garas.dao.ComboBoxCustomDao">
+	
+	<select id="getDataToCombo" resultType="CategoryDto">
+		SELECT 
+	   		*
+		FROM 
+			CATEGORIES
+			
+	</select>
+		<select id="getDataCurrencyBox" resultType="CurrencyDto">
+		SELECT 
+	   		*
+		FROM 
+			EXC_RATE
+	</select>	
+		<!--author tha.bunsath-->
+	<select id="getComboboxItems" resultType="ItemDto">
+		SELECT 
+	   		*
+		FROM 
+			CATEGORIES_ITEM
+	</select>
+		<!--@author tha.bunsath  -->
+	<!-- getComboBoxNumInputProduct -->
+		<select id="getComboBoxNumInputProduct" resultType="CustomFieldDto">
+			SELECT 
+	   			*
+				FROM 
+				SUPPLIER_STOCK_CAPTURE
+      		WHERE 
+      			stock_REMAN > 0
+	</select>
+	
+	<!--findProductNameByProductType  -->
+	<select id="findProductNameByProductType" resultType="CustomFieldDto">
+		select * from CATEGORIES_ITEM where CATEGORIES_CODE = #{categories_CODE};  			
+	</select>
+		<select id="findimport_number" resultType="CustomFieldDto">
+		select * from SUPPLIER_STOCK_CAPTURE where CATEGORIES_CODE = #{categories_CODE} and CAT_ITEM_CODE = #{cat_ITEM_CODE} and stock_REMAN > 0;
+		 			
+	</select>
+	<!-- findProduceByImportNumber -->
+		<select id="findProduceByImportNumber" resultType="CustomFieldDto">
+		select * from SUPPLIER_STOCK_CAPTURE where CATEGORIES_CODE = #{categories_CODE} and CAT_ITEM_CODE = #{cat_ITEM_CODE} and IMPORT_NUM = #{import_NUM}; 			
+	</select>
+	<select id="findCustomerPhoneNumber" resultType="CustomerDto">
+		SELECT * FROM CUSTOMERS where CUS_ID = #{cus_ID};
+	</select>
+	<select id="getComboBoxStockCurrent" resultType="CustomFieldDto">
+		select * from STOCK_CURRENT;
+	</select>
+	</mapper>

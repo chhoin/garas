@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.smart.garas.dao.PaymentInvoiceDao">
+	<!-- Save into database -->
+    <insert id = 'savePaymentInvoice'>
+    INSERT INTO INVOICE_PAYMENT
+           ([PAY_ID]
+           ,[INVOICE_NUM]
+           ,[PAY_TYPE]
+           ,[CURRENCY]
+           ,[PAY_AMOUNT_FCY]
+           ,[EXCHANGE_RATE]
+           ,[PAY_AMOUNT_LCY]
+           ,[PAY_DATE]
+           ,[DESCRIPTION]
+           ,[INPUTTER]
+           ,[INPUT_DATE])
+     VALUES
+           (#{pay_ID}
+           ,#{invoice_NUM}
+           ,#{pay_TYPE}
+           ,#{currency}
+           ,#{pay_AMOUNT_FCY}
+           ,#{exchange_RATE}
+           ,#{pay_AMOUNT_LCY}
+           ,#{pay_DATE}
+           ,#{description}
+           ,#{inputter}
+           ,#{input_DATE})
+    
+    </insert>
+
+	<!-- get combo of categories stock capture -->
+	<select id="getAll" resultType="CaptureDto">
+		SELECT
+			*
+		FROM
+		 	SUPPLIER_STOCK_CAPTURE
+	</select>	
+</mapper>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.smart.garas.dao.CustomerPayableListDao">
+
+	<!-- get combo of invoice customer_invoice -->
+	<select id="getComboCustomerInvoice" resultType="CustomerInvoiceDto">
+			SELECT 
+				invoice_NUM 
+			FROM 
+				INVOICE_PAYMENT
+			WHERE 
+				pay_TYPE = 1
+			GROUP BY 
+				invoice_NUM
+	</select>
+	
+	<!-- get combo customer name and phone number -->
+	<select id="getCustomerNamePhone" resultType="CustomerDto">
+		SELECT
+			cus_KH_NAME, 
+			cus_PHONE
+		FROM
+		 	CUSTOMERS 
+	</select>
+
+	<!-- Get data from database -->
+	<select id="getAll" resultType="CustomerPayableListDto">
+		{
+			CALL PROC_LIST_CUSTOMER_INVOICE_PAYABLE(
+			)
+		}			
+	</select>
+	
+	<!-- search -->
+	<select id="getSearchCusPayList" resultType="CustomerPayableListDto" statementType="CALLABLE">
+		{
+			CALL PROC_SEARCH_CUSTOMER_INVOICE_PAYABLE(
+				 #{p_F_DATE},
+				 #{p_T_DATE},
+				 #{p_INVOICE_NO},
+				 #{p_CUS_NAME},
+				 #{p_CUS_PHONE}
+			)
+		}
+	</select>
+	<!-- end of search -->
+	
+</mapper>

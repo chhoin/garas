@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.smart.garas.dao.UserDao">
+
+	<!-- get all data -->
+	<!-- <select id="getAll" resultType="UserDto">
+		SELECT
+			 USER_CODE,
+			[USER_NAME],
+			 USER_SEX,
+			 USER_BOD,
+			 USER_PHONE,
+			 USER_DES,
+			 USER_INPUTER,
+			 USER_INPUT_DATE
+		FROM
+		 	USERLOG
+	</select> -->
+	
+</mapper>

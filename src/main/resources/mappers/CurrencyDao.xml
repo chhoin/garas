@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.smart.garas.dao.CurrencyDao">
+
+	<!-- Get data from database -->
+	<select id="getAll" resultType="CurrencyDto">
+		SELECT
+			*
+		FROM
+		 	EXC_RATE
+	</select>
+	
+	<!-- Save into database -->
+	<select id="save" resultType="CurrencyDto" statementType="CALLABLE">
+		{
+			CALL PROC_ADD_EXC_RATE(
+				#{cur_NAME},
+				#{cur_SALE},
+				#{cur_BUY},
+				#{cur_DESC}
+			)
+		}
+	</select>
+	
+	<!-- <insert id="save">
+		INSERT INTO EXC_RATE (
+	   		cur_NAME,
+	   		cur_SALE,
+	   		cur_BUY,
+	   		cur_MIDDLE
+		) 
+		VALUES ( 
+			#{cur_NAME},
+			#{cur_SALE},
+			#{cur_BUY},
+			#{cur_MIDDLE}
+		)
+	</insert>  -->
+	
+	<!-- check dubplicat data -->
+	<select id="countById" resultType="Integer">
+		SELECT
+			count(cur_NAME)
+		FROM
+			EXC_RATE
+		<if test="cur_NAME != null and cur_NAME != ''">
+      		WHERE 
+      			cur_NAME = #{cur_NAME}
+      	</if>
+	</select>
+	<!--@Tha bunsath Modify  -->
+	<select id="getCurrencyByID" resultType ='CurrencyDto' >
+			select * from EXC_RATE where CUR_ID = #{cur_ID}
+	</select>
+	
+</mapper>

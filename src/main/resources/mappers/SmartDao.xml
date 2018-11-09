@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.smart.garas.dao.SmartDao">
+
+	<!-- Get data from database -->
+	<select id="getAll" resultType="SmartDto">
+		SELECT
+			ROW_NUMBER() OVER(ORDER BY NAME ASC) AS rowNum,
+			code,
+			name,
+			sex
+		FROM
+		 	smart
+	</select>
+	<!-- End of get data -->
+	
+	<!-- Save data into database -->
+	<select id="save" resultType="SmartDto" statementType="CALLABLE">
+		{
+			CALL PROC_ADD_SMART(
+				#{code},
+				#{name},
+				#{sex}
+			)
+		}
+	</select>
+	<!-- End of save data into database -->
+
+	<!-- Search by name and phone -->
+	<select id="getListByCode" resultType="SmartDto" statementType="CALLABLE">
+		{
+			CALL PROC_LIST_SMART(
+				 #{fromDate},
+				 #{toDate},
+				 #{code}
+			)
+		}
+	</select>
+	<!-- end of search by name and phone -->
+	
+</mapper>

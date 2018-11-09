@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.smart.garas.dao.CustomerListDao">
+	
+	<!-- Get count total page -->
+	<select id="getCountTotalPage" resultType="CustomerListDto" statementType="CALLABLE">
+		{
+			CALL CustomersCountPage(
+				 #{custCode},
+				 #{phone},
+				 #{address}
+			)
+		}
+	</select>
+	
+	<!-- Search data -->
+	<select id="getSearchCustomer" resultType="CustomerListDto" statementType="CALLABLE">
+		{
+			CALL SearchCustomers(
+				 #{custCode},
+				 #{phone},
+				 #{address},
+				 #{currentPage},
+				 #{numPerPage}
+			)
+		}
+	</select>
+	<!-- End of search data -->
+	
+	<!-- get data combo box -->
+	<select id="getCustomerComboName" resultType="CustomerListDto">
+		SELECT 
+			custCode, 
+			custKhName 
+		FROM 
+			tblCustomer
+	</select>
+	
+	<!-- get data combo box -->
+	<select id="getCustomerComboPhone" resultType="CustomerListDto">
+		SELECT 
+			phone 
+		FROM 
+			tblCustomer
+	</select>
+	
+	<!-- get data combo box -->
+	<select id="getCustomerComboVillage" resultType="CustomerListDto">
+		SELECT 
+			provinceCode 
+		FROM 
+			tblCustomer
+		group by 
+			provinceCode
+	</select>
+	
+	<!-- Delete data -->
+	<delete id="deleteById">
+		DELETE FROM
+			Customers
+		<if test="custCode != null and custCode != ''">
+      		WHERE 
+      			custCode = #{custCode}
+      	</if>
+      	
+	</delete>
+	<!-- End of delete data -->
+</mapper>

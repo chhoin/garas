@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.smart.garas.dao.CustomerPayableDao">
+
+	<!-- Get data from database -->
+	<select id="getAll" resultType="CustomerPayableDto">
+		SELECT
+			*
+		FROM
+		 	INVOICE_PAYMENT
+	</select>
+	
+	<!-- Save into database -->
+	<select id="save" resultType="CustomerPayableDto" statementType="CALLABLE">
+		{
+			CALL PROC_ADD_CUS_INVOICE_PAYMENT(
+				#{invoice_NUM},
+				#{currency},
+				#{pay_DATE},
+				#{pay_NEW},
+				#{pay_AMOUNT},
+				#{description},
+				#{inputter}
+			)
+		}
+	</select>
+	<!-- end of Save into database -->
+	
+	<!-- get data combo box of customer invoice-->
+	<select id="getComboCPayInvoice" resultType="CustomerInvoiceDto">
+		SELECT
+			invoice_NUMBER
+		FROM
+		 	CUSTOMER_INVOICE
+		WHERE
+			reciveable_FCY > 0
+	</select>
+	<!-- end of get data combo box -->
+	
+	<!-- get combo of name and phone -->
+	<select id="getComboCusPayInvoice" resultType="CustomerInvoiceDto">
+		SELECT 
+			cus_KH_NAME, 
+			cus_PHONE, 
+			currency,
+			unit_price,
+			qty,
+			CASE WHEN currency = 'USD' THEN RECIVEABLE_FCY ELSE RECIVEABLE_LCY END AS reciveable_FCY
+		FROM 
+			CUSTOMER_INVOICE si 
+			inner join CUSTOMER_STOCK_CAPTURE su on si.INVOICE_NUMBER = su.INVOICE_NUM
+			inner join CUSTOMERS sp on su.CUS_ID = sp.CUS_ID 
+		WHERE 
+			si.INVOICE_NUMBER = #{invoice_NUMBER}
+		AND
+			reciveable_FCY > 0
+	</select>
+	<!-- end of get combo of name and phone -->
+	
+</mapper>

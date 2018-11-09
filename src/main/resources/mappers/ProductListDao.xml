@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.smart.garas.dao.ProductListDao">
+
+	<!-- get data list -->
+	<select id="getAll" resultType="ProductDto" statementType="CALLABLE">
+		{
+			CALL PROC_LIST_STOCK_CURRENT(
+			)
+		}
+		
+	</select>
+	<!-- end of get data list -->
+	
+	<!-- search by name and phone -->
+	<select id="getListByCode" resultType="ProductDto" statementType="CALLABLE">
+		{
+			CALL PROC_SEARCH_STOCK_CURRENT(
+				 #{st_NAME}
+			)
+		}
+	</select>
+	<!-- end of search by name and phone -->
+	
+	<!-- get data to combo box -->
+	<select id="getComboProducts" resultType="CategoryDto">
+		SELECT 
+	   		categories_NAME
+		FROM 
+			CATEGORIES
+	</select>
+	<!-- end of get data to combo box -->
+	
+	<!-- delete data -->
+	<delete id="deleteById">
+		DELETE FROM
+			STOCK_CURRENT
+		WHERE
+			st_ID = #{st_ID}
+	</delete>
+	<!-- end of delete data -->
+	
+</mapper>

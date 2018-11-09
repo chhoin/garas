@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.smart.garas.dao.UnitDao">
+
+	<!-- get data list -->
+	<select id="getAll" resultType="UnitDto">
+		SELECT
+			ROW_NUMBER() OVER(ORDER BY UNIT_CODE ASC) AS auto_NUM,
+			UNIT_CODE,
+			UNIT_NAME,
+			[DESC],
+			INPUT_NAME,
+			INPUT_DATE
+		FROM
+			UNIT
+	</select>
+	<!-- end of get data list -->
+	
+	<!-- Save into database -->
+	<select id="save" resultType="UnitDto" statementType="CALLABLE">
+		{
+			CALL PROC_ADD_UNIT(
+				#{unit_NAME},
+				#{desc},
+				#{input_NAME}
+			)
+		}
+	</select>
+	<!-- end of Save into database -->
+	
+	<!-- check data be for insert (no duplicated) -->
+	<select id="countById" resultType="Integer">
+		SELECT
+			count(unit_NAME)
+		FROM
+			UNIT
+		<if test="unit_NAME != null and unit_NAME != ''">
+      		WHERE 
+      			unit_NAME = #{unit_NAME}
+      	</if>
+	</select>
+	<!-- end of check data be for insert (no duplicated) -->
+	
+	<!-- delete data from database -->
+	<delete id="deleteById">
+		DELETE FROM
+			UNIT
+		WHERE
+			unit_CODE = #{unit_CODE}
+	</delete>
+	<!-- end of delete data -->
+	
+</mapper>

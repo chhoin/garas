@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.smart.garas.dao.ReturntoHengpheaDao">
+	<!-- generated auto invoice sale 
+	List<ReturntoHengpheaDto> getGenerateAutoInvoiceReturn(); -->
+	<select id="getGenerateAutoInvoiceReturn" resultType="ReturntoHengpheaDto">
+		select 
+			cuscapInvoiceRefNo 
+		from 
+			tblInvoiceCode
+	</select>
+	
+	<!-- Get data combo of invoice
+	List<ReturntoHengpheaDto> getComboReturn(); -->
+	<select id="getComboReturn" resultType="ReturntoHengpheaDto">
+		SELECT
+			invoiceNo
+		FROM
+		 	tblImport		 	
+		WHERE 
+			stockRemain > 0
+		AND 
+			[status] = 'N'
+		GROUP BY
+			invoiceNo
+	</select>
+	
+	<!-- Get data combo of information by invoice code  
+	List<ReturntoHengpheaDto> getComboInfoByCode(@Param("invoiceNo") String invoiceNo); -->
+	<select id="getComboInfoByCode" resultType="ReturntoHengpheaDto">
+		select 
+			A.suppCode,
+			suppKhName,
+			B.phone,
+			B.address,
+			A.stockCode,
+			stockKhName,
+			stockRemain/totalCanPerPackage as stockRemain,
+			unitName
+		from tblImport A	inner join tblSupplier B on A.suppCode = B.suppCode 
+							inner join tblStock C on A.stockCode = C.stockCode 
+							inner join tblProductInfo D on A.prodCode = D.prodCode
+							inner join tblUnit E on A.unitCode = E.unitCode 	
+		<if test="invoiceNo != null and invoiceNo != ''">
+      		WHERE 	invoiceNo = #{invoiceNo}
+      		AND 	A.cateCode = #{cateCode}
+			AND 	A.prodCode = #{prodCode}
+			AND 	A.unitCode = #{unitCode}
+      	</if>
+	</select>
+	
+	<!-- Get data combo of category 
+	List<ReturntoHengpheaDto> getComboCategory(@Param("invoiceNo") String invoiceNo); -->
+	<select id="getComboCategory" resultType="ReturntoHengpheaDto">
+		SELECT
+			invoiceNo,
+			A.cateCode,
+			cateName
+		FROM
+		 	tblImport A INNER JOIN tblCategory B ON A.cateCode = B.cateCode 	 	
+		<if test="invoiceNo != null and invoiceNo != ''">
+      		WHERE 
+      			invoiceNo = #{invoiceNo}
+      	</if>
+	</select>
+	
+	<!-- Get combo of product 
+	List<ReturntoHengpheaDto> getComboProduct(@Param("invoiceNo") String invoiceNo, @Param("cateCode") String cateCode); -->
+	<select id="getComboProduct" resultType="ReturntoHengpheaDto">
+		SELECT
+			invoiceNo,
+			A.prodCode,
+			prodName
+		FROM
+		 	tblImport A INNER JOIN tblProductInfo B ON A.prodCode = B.prodCode 	 	
+		<if test="invoiceNo != null and invoiceNo != ''">
+      		WHERE 
+      			invoiceNo = #{invoiceNo}
+      		AND 
+				A.cateCode = #{cateCode}
+      	</if>
+	</select>
+	
+	<!-- Get data combo of unit
+	List<ReturntoHengpheaDto> getComboUnit(@Param("invoiceNo") String invoiceNo, @Param("cateCode") String cateCode, @Param("prodCode") String prodCode); -->
+	<select id="getComboUnit" resultType="ReturntoHengpheaDto">
+		SELECT
+			invoiceNo,
+			A.unitCode,
+			unitName
+		FROM
+		 	tblImport A INNER JOIN tblUnit B ON A.unitCode = B.unitCode 	 	
+		<if test="invoiceNo != null and invoiceNo != ''">
+      		WHERE 
+      			invoiceNo = #{invoiceNo}
+      		AND 
+				A.cateCode = #{cateCode}
+			AND
+				A.prodCode = #{prodCode}      			
+      	</if>
+	</select>
+	
+	<!-- Get data combo of currency
+	List<CurrencyDto> getComboCurrency(); -->
+	<select id="getComboCurrency" resultType="CurrencyDto">
+		SELECT
+			curCode,
+			curName
+		FROM
+		 	tblCurrency
+	</select>
+	
+	<!-- save data into data base
+	Integer save(ReturntoHengpheaDto returntoHengpheaDto); -->
+	<select id="save" resultType="ReturntoHengpheaDto" statementType="CALLABLE">
+		{
+			CALL ADD_IMPORT_RETURN(
+				#{cmd},
+				#{invoiceNo},
+				#{cuscapInvoiceRefNo},
+				#{cateCode},
+				#{prodCode},
+				#{unitCode},
+				#{curCode},
+				#{qty},
+				#{unitPrice},
+				#{imptDesp},
+				#{userCode}
+			)
+		}
+	</select>
+	
+</mapper>

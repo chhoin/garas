@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.smart.garas.dao.UserListDao">
+		<!-- Get data combo of userName -->
+	<select id="getComboUserName" resultType="UserListDto">
+		select 
+			userCode, 
+			userName
+		from 
+			USERS 
+	</select>
+
+	<!-- Search data by userName -->
+	<select id="getSearchUserByName" resultType="UserListDto" statementType="CALLABLE">
+		{
+			CALL PRO_SEARCH_USER(
+				 #{userCode}
+			)
+		}
+	</select>
+	
+	<!-- Delete product by partNo -->
+	<delete id="deleteById">
+		DELETE FROM
+			USERS
+			
+		<if test="userCode != null and userCode != ''">
+      		WHERE 
+      			userCode = #{userCode}
+      	</if>
+	</delete>
+	
+</mapper>

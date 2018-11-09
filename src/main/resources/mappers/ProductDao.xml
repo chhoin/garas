@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.smart.garas.dao.ProductDao">
+
+	<!-- Get data from database -->
+	<select id="getAll" resultType="ProductDto">
+		SELECT
+			*
+		FROM
+		 	STOCK_CURRENT
+	</select>
+	
+	<!-- get data to combo box of categories -->
+	<select id="getComboCategories" resultType="CategoryDto">
+		SELECT
+			categories_NAME
+		FROM
+		 	CATEGORIES
+	</select>
+	
+	<!-- get data to combo box of units -->
+	<select id="getComboUnit" resultType="UnitDto">
+		SELECT
+			unit_NAME
+		FROM
+		 	UNIT
+	</select>
+	
+	<!-- get data to combo box of currency -->
+	<select id="getComboCurrency" resultType="CurrencyDto">
+		SELECT
+			cur_NAME
+		FROM
+		 	EXC_RATE
+	</select>
+	
+	<!-- get data to combo box of item -->
+	<select id="getComboItem" resultType="ItemDto">
+		SELECT
+			cat_ITEM_NAME 
+		FROM
+			CATEGORIES TBL_CATE INNER JOIN CATEGORIES_ITEM TBL_ITEM
+		ON
+			TBL_CATE.CATEGORIES_CODE = TBL_ITEM.CATEGORIES_CODE
+		WHERE
+			categories_NAME = #{categories_NAME}
+	</select>
+	
+	<!-- Save into database -->
+	<select id="save" resultType="ProductDto" statementType="CALLABLE">
+		{
+			CALL PROC_ADD_STOCK_CURRENT(
+				#{st_TYPE},     
+			    #{st_NAME},    
+			    #{st_TYPE_CODE},       
+			    #{st_UNIT},  
+			    #{currency},  
+			    #{wqty},    
+			    #{st_INPUTER},
+			    #{des},
+			    #{import_TYPE}
+			)
+		}
+	</select>
+	<!-- end of Save into database -->
+	
+	<!-- check dubplicat data -->
+	<select id="countById" resultType="Integer">
+		SELECT
+			count(st_NAME)
+		FROM
+			STOCK_CURRENT
+		<if test="st_NAME != null and st_NAME != ''">
+      		WHERE 
+      			st_NAME = #{st_NAME}
+      	</if>
+	</select>
+	
+</mapper>

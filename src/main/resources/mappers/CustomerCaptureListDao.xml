@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.smart.garas.dao.CustomerCaptureListDao">
+
+	<!-- get combo លេខវិក័យបត្រ -->
+	<select id="getComboInvoiceExp" resultType="CustomerCaptureDto">
+		select
+			exptAuto,
+			exptCode
+		from
+			tblExport
+		group 
+			by exptAuto, exptCode
+	</select>
+	
+	<!-- get combo ឈ្មោះអតិថិជន -->
+	<select id="getComboCustomerName" resultType="CustomerDto">
+		select 
+			custCode, 
+			custKhName, 
+			phone
+		from 
+			tblCustomer
+	</select>
+	
+	<!-- get combo លេខទូរស័ព្ទ -->
+	<select id="getComboCustomerPhone" resultType="CustomerDto">
+		select 
+			custCode, 
+			custKhName, 
+			phone
+		from 
+			tblCustomer
+	</select>
+	
+	<!-- get combo ឈ្មោះមុខទំនិញ -->
+	<select id="getComboCategory" resultType="CategoryDto">
+		select
+			cateCode,
+			cateName
+		from
+			tblCategory
+	</select>
+	
+	<!-- Search data customer capture -->
+	<select id="getSearchSaleProduct" resultType="CustomerCaptureListDto" statementType="CALLABLE">
+		{
+			CALL PRO_SEARCH_EXPORT(
+				 #{fromDate},
+				 #{toDate},
+				 #{exptCode},
+				 #{custCode},
+				 #{phone},
+				 #{cateCode},
+				 #{currentPage},
+				 #{numPerPage}
+			)
+		}
+	</select>
+	
+	<!-- Print invoice -->
+	<!-- <select id="getPrintInvoice" resultType="CustomerStockCaptureListDto" statementType="CALLABLE">
+		{
+			CALL PRO_SEARCH_SALE_PRODUCT_INVOICE(
+				 #{slptCode}
+			)
+		}
+	</select> -->
+	
+</mapper>

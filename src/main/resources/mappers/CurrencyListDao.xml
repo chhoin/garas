@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.smart.garas.dao.CurrencyListDao">
+
+	<!-- get data all -->
+	<select id="getAll" resultType="CurrencyDto">
+		{
+			CALL PROC_LIST_EXC_RATE(
+			)
+		}
+	</select>
+	<!-- end of get data all (search) -->
+	
+	
+	<!-- get data by name -->
+	<select id="getListByCode" resultType="CurrencyDto" statementType="CALLABLE">
+		{
+			CALL PROC_SEARCH_EXC_RATE(
+				#{cur_NAME}
+			)
+		}
+	</select>
+	<!-- end of get data by name (search) -->
+	
+	<!-- get data to combo box -->
+	<select id="getDataToCombo" resultType="CurrencyDto">
+		SELECT 
+	   		cur_NAME
+		FROM 
+			EXC_RATE
+	</select>
+	<!-- end of get data to combo box -->
+	
+	<!-- Save into database -->
+	<insert id="save">
+		INSERT INTO EXC_RATE (
+	   		cur_NAME,
+	   		cur_SALE,
+	   		cur_BUY,
+	   		cur_DESC
+		) 
+		VALUES ( 
+			#{cur_NAME},
+			#{cur_SALE},
+			#{cur_BUY},
+			#{cur_DESC}
+		)
+	</insert> 
+	<!-- end of insert data -->
+	
+	<!-- update data -->
+	<update id="editById">
+		UPDATE EXC_RATE SET 
+			cur_SALE = #{cur_SALE},
+			cur_BUY = #{cur_BUY},
+			cur_DESC = #{cur_DESC}
+		WHERE 
+			cur_NAME = #{cur_NAME}
+	</update>
+	<!-- end of update data -->
+	
+	<!-- delete data -->
+	<delete id="deleteById">
+		DELETE FROM
+			EXC_RATE
+		WHERE 
+			cur_NAME = #{cur_NAME}
+	</delete>
+	<!-- end of delete data -->
+	
+	<!-- check data be for insert (no duplicated) -->
+	<select id="countById" resultType="Integer">
+		SELECT
+			count(CUR_NAME)
+		FROM
+			EXC_RATE
+		<if test="cur_NAME != null and cur_NAME != ''">
+      		WHERE 
+      			cur_NAME = #{cur_NAME}
+      	</if>
+	</select>
+	<!-- end of check data be for insert (no duplicated) -->
+	
+	<!-- paginations -->
+	<select id="getRecords" resultType="Integer">
+		SELECT
+			count(cur_NAME)
+		FROM
+			EXC_RATE
+		<if test="cur_NAME != null and cur_NAME != ''">
+      		WHERE 
+      			cur_NAME = #{cur_NAME}
+      	</if>
+	</select>
+	
+	<select id="getPageable" resultType="CurrencyDto">
+		SELECT *
+		FROM (
+				SELECT ROW_NUMBER() OVER(ORDER BY cur_NAME ${sidx} ${sord}) AS RowNum, *
+      			FROM 
+      				EXC_RATE
+      				<if test="cur_NAME != null and cur_NAME != ''">
+      					WHERE 
+      						cur_NAME = #{cur_NAME}
+      				</if>
+     		) as alias
+		WHERE 
+			RowNum 
+		BETWEEN 
+			#{startIndex}
+		AND 
+			#{endIndex}
+	</select>
+	<!-- end of paginations -->
+	
+</mapper>

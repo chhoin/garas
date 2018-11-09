@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.smart.garas.dao.UserDao">
+	<!-- Check duplicate data -->
+	<select id="countById" resultType="Integer">
+		SELECT
+			count(userName)
+		FROM
+			USERS 
+		<if test="userName != null and userName != ''">
+      		WHERE 
+      			userName = #{userName}
+      	</if>
+	</select>
+	
+	<!-- Save into database -->
+	<select id="save" resultType="UserDto" statementType="CALLABLE">
+		{
+			CALL PRO_ADD_USERS(
+				#{userName},
+				#{passWord},
+				#{firstName},
+				#{lastName},
+				#{phone},
+				#{address}
+			)
+		}
+	</select>
+</mapper>

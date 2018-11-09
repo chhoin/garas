@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.smart.garas.dao.ItemDao">
+
+	<!-- get data list -->
+	<select id="getAll" resultType="ItemDto">
+		SELECT 
+			*
+		FROM 
+			CATEGORIES_ITEM
+	</select>
+	<!-- end of get data list -->
+	
+	<!-- get data to combo box of categories -->
+	<select id="getComboCategories" resultType="CategoryDto">
+		SELECT
+			categories_NAME
+		FROM
+		 	CATEGORIES
+	</select>
+	<!-- end of get data to combo box of categories -->
+	
+	<!-- get data to combo box -->
+	<select id="getDataToCombo" resultType="CurrencyDto">
+		SELECT 
+	   		cur_NAME
+		FROM 
+			EXC_RATE
+	</select>
+	<!-- end of get data to combo box -->
+	
+	<!-- Save into database -->
+	<select id="save" resultType="ItemDto" statementType="CALLABLE">
+		{
+			CALL PROC_ADD_CATEGORIES_ITEM(
+				#{categories_CODE},
+				#{cat_ITEM_CODE},
+				#{descricption},
+				#{input_NAME}
+			)
+		}
+	</select>
+	<!-- end of Save into database -->
+	
+	<!-- check data be for insert (no duplicated) -->
+	<select id="countById" resultType="Integer">
+		SELECT
+			count(cat_ITEM_NAME)
+		FROM
+			CATEGORIES_ITEM
+		<if test="cat_ITEM_NAME != null and cat_ITEM_NAME != ''">
+      		WHERE 
+      			cat_ITEM_NAME = #{cat_ITEM_NAME}
+      	</if>
+	</select>
+	<!-- getItemByItemCode -->
+	<select id ="getItemByItemCode" resultType="ItemDto">
+		select * from CATEGORIES_ITEM where CAT_ITEM_CODE = #{cat_ITEM_CODE};
+	</select>
+	<!-- end of check data be for insert (no duplicated) -->
+	
+	
+	
+	
+	
+	
+	
+	
+</mapper>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.smart.garas.dao.GainLossDao">
+
+	<!-- search -->
+	<select id="getSearchGainLoss" resultType="GainLossDto" statementType="CALLABLE">
+		{
+			CALL rpt_GAIN_LOSS(
+				 #{p_DATE_FROM},
+				 #{p_DATE_TO}
+			)
+		}
+	</select>
+	<!-- end of search -->
+	
+</mapper>

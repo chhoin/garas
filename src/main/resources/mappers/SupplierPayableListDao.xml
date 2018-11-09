@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.smart.garas.dao.SupplierPayableListDao">
+
+	<!-- get combo of invoice (invoice_NO) -->
+	<select id="getComboInvSupPayList" resultType="SupplierInvoiceListDto">
+		SELECT
+			invoice_NO
+		FROM
+		 	SUPPLIER_INVOICE
+		 WHERE 
+		 	status = 0
+	</select>
+	
+	<!-- get combo of supplier name -->
+	<select id="getComboNameSupPayList" resultType="SupplierDto">
+		SELECT
+			sup_NAME
+		FROM
+		 	SUPPLIER
+	</select>
+
+	<!-- Get data from database -->
+	<select id="getAll" resultType="SupplierPayableDto">
+		{
+			CALL PROC_LIST_SUPPLIER_INVOICE_PAYABLE(
+			)
+		}			
+	</select>
+	
+	<!-- search -->
+	<select id="getSearchSupPayList" resultType="SupplierPayableDto" statementType="CALLABLE">
+		{
+			CALL PROC_SEARCH_SUPPLIER_INVOICE_PAYABLE(
+				 #{p_From_Date},
+				 #{p_Date_To},
+				 #{p_invoice_NO},
+				 #{p_Sup_Name}
+			)
+		}
+	</select>
+	<!-- end of search -->
+	
+</mapper>

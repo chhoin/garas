@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.smart.garas.dao.IncomeListDao">
+	<!-- get combo of income type -->
+	<select id="getComboIncomeType" resultType="IncomeDto">
+		select
+			incomeCode, 
+			incomeType
+		from
+			tblIncome 
+	</select>
+	
+	<!-- Search data of income -->
+	<select id="getSearchIncome" resultType="IncomeListDto" statementType="CALLABLE">
+		{
+			CALL PRO_SEARCH_INCOME(
+				 #{fromDate},
+				 #{toDate},
+				 #{incomeCode},
+				 #{currentPage},
+				 #{numPerPage}
+			)
+		}
+	</select>
+</mapper>

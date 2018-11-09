@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.smart.garas.dao.ProductInfoListDao">
+	<!-- Search data -->
+	<select id="getSearchProductInfoList" resultType="ProductInfoListDto" statementType="CALLABLE">
+		{
+			CALL PRO_SEARCH_PRODUCT_INFO(
+				 #{prodCode},
+				 #{currentPage},
+				 #{numPerPage}
+			)
+		}
+	</select>
+	<!-- End of search data -->
+	
+	<!-- get data combo box name -->
+	<select id="getComboProductInfoName" resultType="ProductInfoListDto">
+		select 
+			prodCode, 
+			prodName 
+		from 
+			tblProductInfo
+	</select>
+	
+	<!-- Delete data -->
+	<delete id="deleteById">
+		DELETE FROM
+			tblProductInfo
+		<if test="prodCode != null and prodCode != ''">
+      		WHERE 
+      			prodCode = #{prodCode}
+      	</if>
+      	
+	</delete>
+	<!-- End of delete data -->
+</mapper>

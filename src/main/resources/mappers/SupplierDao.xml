@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.smart.garas.dao.SupplierDao">
+	<!-- Save into database -->
+	<select id="save" resultType="SupplierDto" statementType="CALLABLE">
+		{
+			CALL PRO_ADD_SUPPLIER(
+				#{companyName},
+				#{suppKhName},
+				#{suppEngName},
+				#{phone},
+				#{mail},
+				#{address},
+				#{dest},
+				#{userCode}
+			)
+		}
+	</select>
+</mapper>

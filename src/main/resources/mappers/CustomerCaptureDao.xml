@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.smart.garas.dao.CustomerCaptureDao">
+	<!-- Get cuscapInvoiceNo -->
+	<select id="getCusCapInvoiceNoCode" resultType="CustomerCaptureDto">
+		select 
+			cuscapInvoiceNo 
+		from 
+			tblInvoiceCode
+	</select>
+	
+	<!-- get combo ឈ្មោះអតិថិជន​ *** -->
+	<select id ="getComboCustomerCode" resultType="CustomerDto">
+		select 
+			custCode,
+			custKhName  
+		from 
+			tblCustomer 
+	</select>
+	
+	<!-- get combo info ឈ្មោះអតិថិជន​ *** -->
+	<select id="getComboCustomerInfo" resultType="CustomerDto">
+		SELECT 
+   			custCode,
+			custKhName,
+			phone,
+			villageCode, 
+			communeCode, 
+			districtCode, 
+			provinceCode
+		FROM 
+			tblCustomer
+		<if test="custCode != null and custCode != ''">
+    		WHERE 
+    			custCode = #{custCode}
+    	</if>
+	</select>
+	
+	<!-- get combo លេខវិក័យបត្រ ​ *** -->
+	<select id ="getComboInvoiceCode" resultType="CaptureDto">
+		select  
+			invoiceNo 
+		from 
+			tblImport
+		where 
+			stockRemain >= 0
+		group by
+			invoiceNo
+	</select>
+	
+	<!-- get combo info លេខវិក័យបត្រ ​ *** -->
+	<select id="getComboInvoiceInfo" resultType="CaptureListDto" statementType="CALLABLE">
+		{
+			CALL ComboInvoiceImpInfo(
+				 #{invoiceNo}
+			)
+		}
+	</select>
+	
+	<!-- get combo ឯកតា ​ *** -->
+	<select id ="getComboUnit" resultType="UnitDto">
+		select 
+			unitCode,
+			unitName
+		from 
+			tblUnit
+	</select>
+	
+	<!-- get combo ផ្លាកលេខឡាន ​ *** -->
+	<select id ="getCar" resultType="CarDto">
+		select 
+			carCode,
+			carNum
+		from 
+			tblCar
+	</select>
+	
+	<!-- get combo info ឈ្មោះអតិថិជន​ *** -->
+	<select id="getCarInfo" resultType="CarDto">
+		SELECT 
+   			carCode,
+			driverName
+		FROM 
+			tblCar
+		<if test="carCode != null and carCode != ''">
+    		WHERE 
+    			carCode = #{carCode}
+    	</if>
+	</select>
+	
+	<!-- get combo រូបិយប័ណ្ណ -->
+	<select id="getComboCcy" resultType="CurrencyDto">
+		SELECT
+			curCode,
+			curName,
+			curSale,
+			curDest 
+			
+		FROM
+		 	tblCurrency
+	</select>
+	
+	<!-- get combo category code -->
+	<select id="getComboCategoryByInvoiceImp" resultType="CaptureListDto" statementType="CALLABLE">
+		{
+			CALL ComboInvoiceImpInfo(
+				 #{invoiceNo}
+			)
+		}
+	</select>
+	
+	<!-- get combo product code -->
+	<select id="getComboProdTypeByInvoiceImp" resultType="CaptureListDto" statementType="CALLABLE">
+		{
+			CALL ComboSelectCategory(
+				 #{invoiceNo},
+				 #{cateCode}
+			)
+		}
+	</select>
+	
+	<!-- Save data into database -->
+	<select id="save" resultType="CustomerCaptureDto" statementType="CALLABLE">
+		{
+			CALL addExportProduct(
+				#{cmd},
+				#{exptCode},
+				#{invoiceNo},
+				#{custCode},
+				#{exptDate},
+				#{stockCode},
+				#{cateCode},
+				#{prodCode},
+				#{unitCode},
+				#{curCode},
+				#{qty},
+				#{unitPrice},
+				#{carCode},
+				#{driverName},
+				#{placePoint},
+				#{exptDesp},
+				#{userCode},
+				#{payOffDate},
+				#{amount}
+			)
+		}
+	</select>
+	
+</mapper>

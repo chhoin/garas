@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.smart.garas.dao.SupplierPayableDao">
+
+	<!-- get combo of invoice (invoice_NO) -->
+	<select id="getComboSupplierInvoice" resultType="SupplierInvoiceDto">
+		SELECT
+			invoice_NO
+		FROM
+		 	SUPPLIER_INVOICE
+		 WHERE 
+		 	status = 1
+	</select>
+	
+	<!-- get combo of currency -->
+	<select id="getComboCurrency" resultType="CurrencyDto">
+		SELECT
+			cur_NAME
+		FROM
+		 	EXC_RATE
+	</select>
+	
+	<!-- get combo of total balance amount -->
+	<select id="getComboTotalBalance" resultType="SupplierInvoiceDto">
+		SELECT 
+			sup_NAME, 
+			sup_TEL, 
+			currency,
+			unit_price,
+			qty,
+			CASE WHEN currency = 'USD' THEN RECIVABLE_FCY ELSE RECIVABLE_LCY END AS recivable_FCY  
+		FROM 
+			SUPPLIER_INVOICE si 
+			inner join SUPPLIER_STOCK_CAPTURE su on si.invoice_NO = su.invoice_NO
+			inner join SUPPLIER sp on su.sup_ID = sp.sup_ID 
+		WHERE 
+			si.invoice_NO = #{invoice_NO}
+		AND
+			si.status = 1
+	</select>
+
+	<!-- Get data from database -->
+	<select id="getAll" resultType="SupplierPayableDto">
+		<!-- SELECT * FROM INVOICE_PAYMENT -->
+	
+		SELECT 
+			sup_NAME, 
+			sup_TEL, 
+			currency,
+			recivable_FCY 
+		FROM 
+			SUPPLIER_INVOICE si 
+			inner join SUPPLIER_STOCK_CAPTURE su on si.invoice_NO = su.invoice_NO
+			inner join SUPPLIER sp on su.sup_ID = sp.sup_ID 
+			
+	</select>
+	
+	<!-- Save into database -->
+	<select id="save" resultType="SupplierPayableDto" statementType="CALLABLE">
+		{
+			CALL PROC_ADD_INVOICE_PAYMENT(
+				 #{invoice_NUM},
+				 #{currency},
+				 #{pay_DATE},
+				 #{pay_NEW},
+				 #{pay_AMOUNT_FCY},
+				 #{description},
+				 #{inputter}
+			)
+		}
+	</select>
+	
+</mapper>

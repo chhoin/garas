@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.smart.garas.dao.CaptureDao">
+	<!-- get combo ឈ្មោះក្រុមហ៊ុន -->
+	<select id="getComboSuppCompany" resultType="SupplierDto">
+		SELECT
+			suppCode,
+			companyName,
+			suppKhName			
+		FROM
+		 	tblSupplier
+	</select>
+	
+	<!-- get combo info ឈ្មោះអ្នកផ្គត់ផ្គង់  by ឈ្មោះក្រុមហ៊ុន -->
+	<select id="getComboSuppName" resultType="SupplierDto">
+		SELECT
+			suppCode,
+			companyName,
+			suppKhName			
+		FROM
+		 	tblSupplier		 	
+		<if test="suppCode != null and suppCode != ''">
+      		WHERE 
+      			suppCode = #{suppCode}
+      	</if>
+	</select>
+	
+	<!-- Get combo car number -->
+	<select id="getCarNum" resultType="CarDto">
+		SELECT 
+			carCode,
+			carNum,
+			driverName											
+		FROM
+		 	tblCar
+	</select>
+	
+	<!-- get combo of driver name by car code -->
+	<select id="getDriverName" resultType="CarDto">
+		SELECT 
+			carCode,
+			carNum,
+			driverName											
+		FROM
+		 	tblCar		 	
+		<if test="carCode != null and carCode != ''">
+      		WHERE 
+      			carCode = #{carCode}
+      	</if>
+	</select>
+	
+	<!-- got combo ឈ្មោះមុខទំនិញ  -->
+	<select id="getComboCategory" resultType="CategoryDto">
+		SELECT
+			cateCode, 
+			cateName 			
+		FROM
+		 	tblCategory
+	</select>
+	
+	<!-- get combo Info ប្រភេទមុខទំនិញ by ឈ្មោះមុខទំនិញ  -->
+	<select id="getComboCategoryInfo" resultType="ProductInfoDto">
+		SELECT
+			cateCode,
+	      	prodCode,
+	      	prodName,
+	      	pricePerUnit,
+	      	pricePerItem,
+	      	totalCanPerPackage
+		FROM
+		 	tblProductInfo		 	
+		<if test="cateCode != null and cateCode != ''">
+      		WHERE 
+      			cateCode = #{cateCode}
+      	</if>
+	</select>
+	
+	<!-- get combo ឯកតា -->
+	<select id="getComboUnit" resultType="UnitDto">
+		SELECT
+			unitCode,
+			unitName
+		FROM
+		 	tblUnit
+		WHERE
+			unitType  = #{unitType}		
+	</select>
+	
+	<!-- save Import Products -->
+	<select id="save" resultType="CaptureDto" statementType="CALLABLE">
+		{
+			CALL addImportProduct(
+				 #{cmd},
+				 #{invoiceNo},
+				 #{suppCode},
+				 #{stockCode},
+				 #{cateCode},
+				 #{prodCode},
+				 #{unitCode},
+				 #{curCode},
+				 #{qty},
+				 #{unitPrice},
+				 #{totalAmt},
+				 #{payOffDate},
+				 #{imptDesp},
+				 #{carCode},
+				 #{userCode}
+			)
+		}
+	</select>
+	
+	<!-- save Import Payment -->
+	<select id="saveImportPayment" resultType="PaymentDto" statementType="CALLABLE">
+		{
+			CALL PRO_ADD_IMPORT_PAYMENT(
+				 #{invoiceNo},
+				 #{payDate},
+				 #{amount},
+				 #{curCode},
+				 #{userCode},
+				 #{payStatus}
+			)
+		}
+	</select>
+	
+	<!-- get combo រូបិយប័ណ្ណ -->
+	<select id="getComboCcy" resultType="CurrencyDto">
+		SELECT
+			curCode,
+			curName,
+			curSale,
+			curDest 			
+		FROM
+		 	tblCurrency
+	</select>
+	
+	<!-- Search data Import Product Print -->
+	<select id="getSearchCapturePrint" resultType="CaptureListDto" statementType="CALLABLE">
+		{
+			CALL rptImportProductPrint(
+				 #{invoiceNo},
+				 #{curCode}
+			)
+		}
+	</select>
+	
+</mapper>

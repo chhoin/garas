@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.smart.garas.dao.SupplierListDao">
+	<!-- Search data -->
+	<select id="getSearchSupplier" resultType="SupplierListDto" statementType="CALLABLE">
+		{
+			CALL PRO_SEARCH_SUPPLIER(
+				 #{suppCode},
+				 #{phone},
+				 #{currentPage},
+				 #{numPerPage}
+			)
+		}
+	</select>
+	<!-- End of search data -->
+	
+	<!-- get data combo box name -->
+	<select id="getSupplierComboName" resultType="SupplierListDto">
+		select 
+			suppCode, 
+			companyName, 
+			suppKhName, 
+			phone 
+		from 
+			tblSupplier
+	</select>
+	
+	<!-- get data combo box phone -->
+	<select id="getSupplierComboPhone" resultType="SupplierListDto">
+		select 
+			suppCode, 
+			companyName, 
+			suppKhName, 
+			phone 
+		from 
+			tblSupplier
+	</select>
+	
+	<!-- Delete data -->
+	<delete id="deleteById">
+		DELETE FROM
+			tblSupplier
+		<if test="suppCode != null and suppCode != ''">
+      		WHERE 
+      			suppCode = #{suppCode}
+      	</if>
+      	
+	</delete>
+	<!-- End of delete data -->
+</mapper>

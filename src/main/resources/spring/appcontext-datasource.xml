@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd">
+
+	<!-- jdbc connection database sql server 2008 r2 -->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName" value="com.microsoft.sqlserver.jdbc.SQLServerDriver" />
+		
+		<property name="url" value="jdbc:sqlserver://MCNC-KIMCHHOIN;DatabaseName=GARASHP" />
+		<property name="username" value="sa" />
+		<property name="password" value="Passw@rd!" />
+		
+		<!-- Mr. Pov PC -->
+		<!-- <property name="url" value="jdbc:sqlserver://192.168.1.105\SQL2008;DatabaseName=GARAS" />
+		<property name="username" value="sa" />
+		<property name="password" value="@Pa$$r0rd$123" /> -->
+		
+		<!-- <property name="url" value="jdbc:sqlserver://DESKTOP-K1H6M18\SQL2008;DatabaseName=GARAS" />
+		<property name="username" value="sa" />
+		<property name="password" value="xx88$SS12345" /> -->
+		
+		<!-- Karas Heng Phea -->
+		<!-- <property name="url" value="jdbc:sqlserver://192.168.0.190\SQL2008R2;DatabaseName=GARAS" />
+		<property name="username" value="sa" />
+		<property name="password" value="@HP*St98$" /> -->
+		
+		<!-- <property name="url" value="jdbc:sqlserver://DESKTOP-I72LQQB\SQL2008;DatabaseName=GARAS" /> -->
+		<!-- <property name="password" value="@HP*St98$" /> mac -->
+		<!-- <property name="password" value="@2017<>S?cess&" /> -->
+	</bean>
+	
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		
+		<!-- check xml files in  src/main/resources/mappers -->
+		<property name="mapperLocations" value="classpath:/mappers/**"/>
+		
+		<!-- convert jdbc resultset class pojo (dto) in package com.learn.usermanagementsystem.dto -->
+		<property name="typeAliasesPackage" value="com.smart.garas.dto"/>
+	</bean>
+
+	<!-- scan dao interface -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.smart.garas.dao" />
+		<property name="annotationClass" value="org.springframework.stereotype.Repository" />
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+	</bean>
+	
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
+		p:dataSource-ref="dataSource" />
+	<tx:annotation-driven/>
+</beans>

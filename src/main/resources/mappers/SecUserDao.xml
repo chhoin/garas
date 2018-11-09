@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.smart.garas.dao.SecUserDao">
+
+	<!-- get all data -->
+	<select id="getAll" resultType="SecUserDto">
+		SELECT
+			*
+		FROM
+		 	tu_sec_user
+	</select>
+	
+	<select id="getStudentByUserName" resultType="SecUserDto">
+			select * from tu_sec_user where sec_usr_login = #{sec_usr_login};
+	</select>
+	
+	
+	<!-- Save into database -->
+	<insert id="insertStudent">
+		INSERT INTO tu_sec_user (
+			   sta_rec_code,
+			   sec_usr_name,
+			   sec_usr_login,
+			   sec_usr_password,
+			   <!-- sec_usr_salt, -->
+			   usr_cre
+			   <!-- dt_cre -->
+		) 
+		VALUES ( 
+			   #{sta_rec_code},
+			   #{sec_usr_name},
+			   #{sec_usr_login},
+			   #{sec_usr_password},
+			   #{usr_cre}
+			  <!--  #{dt_cre} -->
+		)
+	</insert>
+</mapper>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smart.garas.dao.ExpenseDao">
+	
+	<!-- Save data to database -->
+	<select id="save" resultType="ExpenseDto" statementType="CALLABLE">
+		{
+			CALL PRO_ADD_EXPENCE(
+				#{expDate},
+				#{expType},
+				#{dest},
+				#{curCode},
+				#{amount},
+				#{userCode}
+			)
+		}
+	</select>
+	
+</mapper>
