@@ -66,8 +66,7 @@ public class UserDto implements UserDetails{
 	
 	
 	
-	
-	
+
 	public List<roleDto> getRoles() {
 		return roles;
 	}
