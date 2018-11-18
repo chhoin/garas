@@ -13,7 +13,7 @@ import com.smart.garas.dto.ProductInfoDto;
 import com.smart.garas.dto.SupplierDto;
 import com.smart.garas.dto.UnitDto;
 
-@Repository
+@Repository("CaptureDao")
 public interface CaptureDao {
 	// save Import Products
 	Integer save(CaptureDto capture);

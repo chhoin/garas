@@ -17,8 +17,10 @@ public class UserDto implements UserDetails{
 	private String password;
 	private	String phone;
 	private String address;
+	private List<SubMenuDto> menus;
 	
-	private List<roleDto> roles;
+	
+	private List<RoleDto> roles;
 	private boolean accountNonExpired = true;
     private boolean accountNonLocked = true;
     private boolean credentialsNonExpired = true;
@@ -67,10 +69,10 @@ public class UserDto implements UserDetails{
 	
 	
 
-	public List<roleDto> getRoles() {
+	public List<RoleDto> getRoles() {
 		return roles;
 	}
-	public void setRoles(List<roleDto> roles) {
+	public void setRoles(List<RoleDto> roles) {
 		this.roles = roles;
 	}
 	@Override
@@ -105,6 +107,11 @@ public class UserDto implements UserDetails{
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return roles;
 	}
-	
+	public List<SubMenuDto> getMenus() {
+		return menus;
+	}
+	public void setMenus(List<SubMenuDto> menus) {
+		this.menus = menus;
+	}
 	
 }

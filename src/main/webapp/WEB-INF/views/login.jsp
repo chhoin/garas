@@ -94,7 +94,7 @@
 		        
 	        	<div style="margin-top: 50px;"> </div>
 	        
-				<form action="<c:url value='/login'/>" method='POST' id="myForm" class="bs-example form-horizontal">
+				<form action="<c:url value="/j_spring_security_check"/>" method='POST' id="myForm" class="bs-example form-horizontal">
 			          <div class="form-group">
 				           <div class="input-group">
 				            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span> 

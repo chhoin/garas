@@ -1,7 +1,8 @@
 <%-- <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%> --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="false" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="security"%>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -211,36 +212,29 @@
 						<a  class="active" href="javascript:void(0);" data-toggle="collapse" data-target="#dashboard_dr"><i class="icon-picture mr-10"></i>Dashboard <span class="pull-right"></span></a>
 					</li> -->
 					
+					<security:authentication var="menus" property="principal.menus" />
+				
 					<li>
 						<a href="javascript:void(0);" data-toggle="collapse" data-target="#table_dr"><i class="icon-grid mr-10"></i>ផ្នែកនាំទំនិញចូល<span class="pull-right"><i class="fa fa-fw fa-angle-down"></i></span></a>
 						<ul id="table_dr" class="collapse collapse-level-1">
-							<li><a href='<c:url value="capture"/>'>ទំនិញនាំចូល</a></li>
-							<li><a href='<c:url value="capturelist"/>'>បញ្ជីទំនិញនាំចូល</a></li>
-							<li><a href='<c:url value="returntohengphea"/>'>បង្វិលប្រេងចូលហេងភា</a></li>							
-							<%-- <li>
-								<a href="javascript:void(0);" data-toggle="collapse" data-target="#support_dr">Report<span class="pull-right"><i class="fa fa-fw fa-angle-down"></i></span></a>
-								<ul id="support_dr" class="collapse">
-									<li><a href='<c:url value="/#"/>'>Report Prepaid</a></li>
-								</ul>
-							</li> --%>
+							<c:forEach items="${menus}" var="item">
+							    <c:if test="${item.menu == '1' }">
+							    	<li><a href='<c:url value="${item.menuValue}"/>'>${item.menuName}</a></li>
+							    </c:if>
+							</c:forEach>					
 						</ul>
 					</li>
 					
 					<li>
 						<a href="javascript:void(0);" data-toggle="collapse" data-target="#pages_dr"><i class="icon-grid mr-10"></i>ផ្នែកលក់ទំនិញ<span class="pull-right"><i class="fa fa-fw fa-angle-down"></i></span></a>
 						<ul id="pages_dr" class="collapse collapse-level-1">
-							<li><a href='<c:url value="customercapture"/>'>ទំនិញលក់ចេញ</a></li>
-							<li><a href='<c:url value="customercapturelist"/>'>បញ្ជីទំនិញលក់ចេញ</a></li>
+							<c:forEach items="${menus}" var="item">
+							    <c:if test="${item.menu == '2' }">
+							    	<li><a href='<c:url value="${item.menuValue}"/>'>${item.menuName}</a></li>
+							    </c:if>
+							</c:forEach>
 						</ul>
 					</li>
-					
-					<%-- <li>
-						<a href="javascript:void(0);" data-toggle="collapse" data-target="#maps_dr"><i class="icon-grid mr-10"></i>របាយការណ៍<span class="pull-right"><i class="fa fa-fw fa-angle-down"></i></span></a>
-						<ul id="maps_dr" class="collapse collapse-level-1">
-							<li><a href='<c:url value="supplierinvoicelist"/>'>បញ្ជីជំពាក់ក្រុមហ៊ុន</a></li>
-							<li><a href='<c:url value="customerinvoicelist"/>'>បញ្ជីអតិថិជនជំពាក់</a></li>
-						</ul>
-					</li> --%>
 					
 					<li>
 						<a href="#" data-toggle="collapse" data-target="#dropdown_dr_lv1"><i class="icon-grid mr-10"></i>Tools<span class="pull-right"><i class="fa fa-fw fa-angle-down"></i></span></a>
@@ -263,15 +257,6 @@
 							<li><a href='<c:url value="supplierlist"/>'>បញ្ជីចំណាយផ្សេងៗ</a></li>
 						</ul>
 					</li>
-					
-					<%-- <li>
-						<a href="javascript:void(0);" data-toggle="collapse" data-target="#app_dr"><i class="icon-grid mr-10"></i>User Authentication <span class="pull-right"><i class="fa fa-fw fa-angle-down"></i></span></a>
-						<ul id="app_dr" class="collapse collapse-level-1">
-							<li><a href='<c:url value="#"/>'>Create Users</a></li>
-							<li><a href='<c:url value="#"/>'>List of Users</a></li>
-							<li><a href='<c:url value="#"/>'>Change Password</a></li>
-						</ul>
-					</li> --%>
 					
 				</ul>
 			</div>

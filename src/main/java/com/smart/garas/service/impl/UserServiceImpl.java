@@ -22,4 +22,9 @@ public class UserServiceImpl implements UserService {
 	public Integer countById(String userName) {
 		return userDao.countById(userName);
 	}
+
+	@Override
+	public UserDto login(String userName) {
+		return userDao.login(userName);
+	}
 }

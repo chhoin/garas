@@ -3,6 +3,56 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.smart.garas.dao.UserDao">
+
+ 	<resultMap type="UserDto" id="user">
+ 		<result property="userCode"			column="userCode"/>
+		<result property="username"			column="username"/>
+		<result property="password"			column="password"/>
+		<result property="phone"			column="phone"/>
+		<result property="address"			column="address"/>
+		<result property="enabled"			column="enabled"/>
+		<collection property="roles"		resultMap="roless"/>
+		<collection property="menus"		resultMap="menuess"/>
+	</resultMap>
+	
+	 <resultMap type="SubMenuDto" id="menuess">
+        <result property="menuName"			column="menuName"/>
+        <result property="menuValue"		column="menuValue"/>
+        <result property="menu"				column="menu"/>
+        <result property="enable"			column="enable"/>
+    </resultMap>
+	
+    <resultMap type="RoleDto" id="roless">
+        <result property="name"		column="name"/>
+    </resultMap>
+    
+	 <select id="login" resultMap="user">
+        SELECT 
+        	  U.userCode
+			, U.username
+			, U.password
+			, U.enabled
+			, U.phone
+			, U.address
+			, R.name
+			
+			,M.menuName
+			,M.menuValue
+			,M.menu
+			,MS.enable
+			 		
+		FROM tblUser AS U
+			INNER JOIN tblUserRole AS R ON R.userCode = U.userCode
+			INNER JOIN tblMenuAssign AS MS ON MS.userCode = U.userCode
+			INNER JOIN tblSubMenu AS M ON M.menuId = MS.menuId
+		WHERE 
+			U.enabled = '1'
+		AND MS.enable = '1'
+		AND
+			U.username = #{userName}
+	</select>
+
+
 	<!-- Check duplicate data -->
 	<select id="countById" resultType="Integer">
 		SELECT
@@ -28,4 +78,6 @@
 			)
 		}
 	</select>
+	
+	
 </mapper>

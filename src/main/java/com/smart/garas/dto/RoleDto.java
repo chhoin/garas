@@ -2,7 +2,7 @@ package com.smart.garas.dto;
 
 import org.springframework.security.core.GrantedAuthority;
 
-public class roleDto implements GrantedAuthority{
+public class RoleDto implements GrantedAuthority{
 
 	private static final long serialVersionUID = -9037204373405570349L;
 	

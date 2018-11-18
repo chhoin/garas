@@ -8,4 +8,6 @@ public interface UserService {
 	
 	// Check duplicated data
 	Integer countById(String userName);
+	
+	public UserDto login(String userName);
 }

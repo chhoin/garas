@@ -1,9 +1,12 @@
 package com.smart.garas.service.impl;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import com.smart.garas.dao.CaptureDao;
 import com.smart.garas.dto.CaptureDto;
 import com.smart.garas.dto.CaptureListDto;
@@ -19,7 +22,9 @@ import com.smart.garas.service.CaptureService;
 @Service
 @Transactional(rollbackFor = Exception.class)
 public class CaptureServiceImpl implements CaptureService {
+	
 	@Autowired
+	@Qualifier(value="CaptureDao")
 	private CaptureDao captureDao;
 
 	@Override

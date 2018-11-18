@@ -1,6 +1,7 @@
 package com.smart.garas.controller;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 import com.smart.garas.dto.CaptureDto;
 import com.smart.garas.dto.CaptureListDto;
 import com.smart.garas.dto.CarDto;
@@ -17,12 +19,12 @@ import com.smart.garas.dto.PaymentDto;
 import com.smart.garas.dto.ProductInfoDto;
 import com.smart.garas.dto.SupplierDto;
 import com.smart.garas.dto.UnitDto;
-import com.smart.garas.service.CaptureService;
+import com.smart.garas.service.impl.CaptureServiceImpl;
 
 @Controller
 public class CaptureController {
 	@Autowired
-	private CaptureService captureService;
+	private CaptureServiceImpl captureService;	
 	
 	// show page 
 	@RequestMapping("/capture")
@@ -30,14 +32,14 @@ public class CaptureController {
 		return "capture";
 	}
 	
-	// get combo ឈ្មោះក្រុមហ៊ុន
+	// get combo �엳�윊�옒�웶�웻���윊�옔�왊�옒�옞�웿�왊�옋
 	@RequestMapping(value="/api/capturecombosupplier", method = RequestMethod.GET)
 	@ResponseBody
 	public List<SupplierDto> getComboSuppCompanys(){
 		return captureService.getComboSuppCompany();
 	}
 	
-	// get combo info ឈ្មោះអ្នកផ្គត់ផ្គង់  by ឈ្មោះក្រុមហ៊ុន
+	// get combo info �엳�윊�옒�웶�웻�옠�윊�옋���옎�윊�엩�옃�윀�옎�윊�엩�엫�윀  by �엳�윊�옒�웶�웻���윊�옔�왊�옒�옞�웿�왊�옋
 	@RequestMapping(value="/api/capturecombosuppinfo/{suppCode}", method = RequestMethod.GET)
 	@ResponseBody
 	public List<SupplierDto> getComboSuppNames(@PathVariable String suppCode){
@@ -58,14 +60,14 @@ public class CaptureController {
 		return captureService.getDriverName(carCode);
 	}
 	
-	// got combo ឈ្មោះមុខទំនិញ
+	// got combo �엳�윊�옒�웶�웻�옒�왊�엨�옉�웺�옋�왅�엵
 	@RequestMapping(value="/api/capcombocategories", method = RequestMethod.GET)
 	@ResponseBody
 	public List<CategoryDto> getComboCategorys(){
 		return captureService.getComboCategory();
 	}
 	
-	// get combo Info ប្រភេទមុខទំនិញ by ឈ្មោះមុខទំនិញ
+	// get combo Info �옍�윊�옔�옑�웳�옉�옒�왊�엨�옉�웺�옋�왅�엵 by �엳�윊�옒�웶�웻�옒�왊�엨�옉�웺�옋�왅�엵
 	@RequestMapping(value="/api/capcombocategoriesinfo/{cateCode}", method = RequestMethod.GET)
 	@ResponseBody
 	public List<ProductInfoDto> getComboCategoryInfos(@PathVariable String cateCode){
@@ -86,14 +88,14 @@ public class CaptureController {
 		return captureService.saveImportPayment(paymentDto);
 	}
 	
-	// get combo ឯកតា
+	// get combo �옸���옃�왃
 	@RequestMapping(value="/api/capturecomunit/{unitType}", method = RequestMethod.GET)
 	@ResponseBody
 	public List<UnitDto> getComboUnits(@PathVariable String unitType){
 		return captureService.getComboUnit(unitType);
 	}
 	
-	// get combo រូបិយប័ណ្ណ
+	// get combo �옔�왋�옍�왅�옓�옍�윇�옂�윊�옂
 	@RequestMapping(value="/api/capturecomboccy", method = RequestMethod.GET)
 	@ResponseBody
 	public List<CurrencyDto> getComboCcys(){
