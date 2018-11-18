@@ -7,7 +7,6 @@ public class CarDto {
 	private String carNum;
 	private String driverName;
 	
-	
 	public String getCarNum() {
 		return carNum;
 	}
