@@ -64,55 +64,7 @@
 											<p>List of Debtors!</p>
 										</div>
 									</div>
-									<%-- <hr>
-									<div class="sl-item">
-										<div class="icon">
-											<i class="fa fa-spotify"></i>
-										</div>
-										<div class="sl-content">
-											<a href="javascript:void(0)" class="inline-block capitalize-font  pull-left">
-											2 voice mails</a>
-											<span class="inline-block font-12  pull-right">2pm</span>
-											<div class="clearfix"></div>
-											<p>Neque porro quisquam est</p>
-										</div>
-									</div>
-									<hr>
-									<div class="sl-item">
-										<div class="icon">
-											<i class="fa fa-whatsapp"></i>
-										</div>
-										<div class="sl-content">
-											<a href="javascript:void(0)" class="inline-block capitalize-font  pull-left">8 voice messanger</a>
-											<span class="inline-block font-12 pull-right">1pm</span>
-											<div class="clearfix"></div>
-											<p>8 texts</p>
-										</div>
-									</div>
-									<hr>
-									<div class="sl-item">
-										<div class="icon">
-											<i class="fa fa-envelope"></i>
-										</div>
-										<div class="sl-content">
-											<a href="javascript:void(0)" class="inline-block capitalize-font  pull-left">2 new messages</a>
-											<span class="inline-block font-12  pull-right">1pm</span>
-											<div class="clearfix"></div>
-											<p>ashjs@gmail.com</p>
-										</div>
-									</div>
-									<hr>
-									<div class="sl-item">
-										<div class="sl-avatar avatar avatar-sm avatar-circle">
-											<img class="img-responsive img-circle" src='<c:url value="/resources/designs/main/dist/img/user4.png"/>' alt="avatar">
-										</div>
-										<div class="sl-content">
-											<a href="javascript:void(0)" class="inline-block capitalize-font  pull-left">Sandy Doe</a>
-											<span class="inline-block font-12  pull-right">1pm</span>
-											<div class="clearfix"></div>
-											<p>Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit</p>
-										</div>
-									</div> --%>
+									
 								</div><div class="slimScrollBar" style="background: rgb(60, 184, 120) none repeat scroll 0% 0%; width: 7px; position: absolute; top: 0px; opacity: 0.4; display: block; border-radius: 7px; z-index: 99; right: 1px;"></div><div class="slimScrollRail" style="width: 7px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 7px; background: rgb(51, 51, 51) none repeat scroll 0% 0%; opacity: 0.2; z-index: 90; right: 1px;"></div></div>
 							</li>
 						</ul>
@@ -160,49 +112,119 @@
 					
 					<security:authentication var="menus" property="principal.menus" />
 				
-					<li>
-						<a href="javascript:void(0);" data-toggle="collapse" data-target="#table_dr"><i class="icon-grid mr-10"></i>ផ្នែកនាំទំនិញចូល<span class="pull-right"><i class="fa fa-fw fa-angle-down"></i></span></a>
-						<ul id="table_dr" class="collapse collapse-level-1">
-							<c:forEach items="${menus}" var="item">
-							    <c:if test="${item.menu == '1' }">
-							    	<li><a href='<c:url value="${item.menuValue}"/>'>${item.menuName}</a></li>
-							    </c:if>
-							</c:forEach>					
-						</ul>
-					</li>
+					<security:authorize access="hasAnyRole('ROLE_USER')">
+   						<li>
+							<a href="javascript:void(0);" data-toggle="collapse" data-target="#table_dr"><i class="icon-grid mr-10"></i>ផ្នែកនាំទំនិញចូល<span class="pull-right"><i class="fa fa-fw fa-angle-down"></i></span></a>
+							<ul id="table_dr" class="collapse collapse-level-1">
+								<c:forEach items="${menus}" var="item">
+								    <c:if test="${item.menu == '1' }">
+								    	<li><a href='<c:url value="${item.menuValue}"/>'>${item.menuName}</a></li>
+								    </c:if>
+								</c:forEach>					
+							</ul>
+						</li>
+						
+						<li>
+							<a href="javascript:void(0);" data-toggle="collapse" data-target="#table_dr"><i class="icon-grid mr-10"></i>ផ្នែកលក់ទំនិញ<span class="pull-right"><i class="fa fa-fw fa-angle-down"></i></span></a>
+							<ul id="table_dr" class="collapse collapse-level-1">
+								<c:forEach items="${menus}" var="item">
+								    <c:if test="${item.menu == '2' }">
+								    	<li><a href='<c:url value="${item.menuValue}"/>'>${item.menuName}</a></li>
+								    </c:if>
+								</c:forEach>					
+							</ul>
+						</li>
+						
+						<li>
+							<a href="javascript:void(0);" data-toggle="collapse" data-target="#table_dr"><i class="icon-grid mr-10"></i>របាយការណ៍<span class="pull-right"><i class="fa fa-fw fa-angle-down"></i></span></a>
+							<ul id="table_dr" class="collapse collapse-level-1">
+								<c:forEach items="${menus}" var="item">
+								    <c:if test="${item.menu == '3' }">
+								    	<li><a href='<c:url value="${item.menuValue}"/>'>${item.menuName}</a></li>
+								    </c:if>
+								</c:forEach>					
+							</ul>
+						</li>
+						
+						<li>
+							<a href="javascript:void(0);" data-toggle="collapse" data-target="#table_dr"><i class="icon-grid mr-10"></i>Tools<span class="pull-right"><i class="fa fa-fw fa-angle-down"></i></span></a>
+							<ul id="table_dr" class="collapse collapse-level-1">
+								<c:forEach items="${menus}" var="item">
+								    <c:if test="${item.menu == '4' }">
+								    	<li><a href='<c:url value="${item.menuValue}"/>'>${item.menuName}</a></li>
+								    </c:if>
+								</c:forEach>					
+							</ul>
+						</li>
+						
+						<li>
+							<a href="javascript:void(0);" data-toggle="collapse" data-target="#table_dr"><i class="icon-grid mr-10"></i>View<span class="pull-right"><i class="fa fa-fw fa-angle-down"></i></span></a>
+							<ul id="table_dr" class="collapse collapse-level-1">
+								<c:forEach items="${menus}" var="item">
+								    <c:if test="${item.menu == '5' }">
+								    	<li><a href='<c:url value="${item.menuValue}"/>'>${item.menuName}</a></li>
+								    </c:if>
+								</c:forEach>					
+							</ul>
+						</li>
+						
+					</security:authorize>
 					
-					<li>
-						<a href="javascript:void(0);" data-toggle="collapse" data-target="#pages_dr"><i class="icon-grid mr-10"></i>ផ្នែកលក់ទំនិញ<span class="pull-right"><i class="fa fa-fw fa-angle-down"></i></span></a>
-						<ul id="pages_dr" class="collapse collapse-level-1">
-							<c:forEach items="${menus}" var="item">
-							    <c:if test="${item.menu == '2' }">
-							    	<li><a href='<c:url value="${item.menuValue}"/>'>${item.menuName}</a></li>
-							    </c:if>
-							</c:forEach>
-						</ul>
-					</li>
+					<security:authorize access="hasAnyRole('ROLE_ADMIN')">
 					
-					<li>
-						<a href="#" data-toggle="collapse" data-target="#dropdown_dr_lv1"><i class="icon-grid mr-10"></i>Tools<span class="pull-right"><i class="fa fa-fw fa-angle-down"></i></span></a>
-						<ul id="dropdown_dr_lv1" class="collapse collapse-level-1">
-							<li><a href='<c:url value="customer"/>'>បញ្ចូលអតិថិជន</a></li>
-							<li><a href='<c:url value="supplier"/>'>បញ្ចូលអ្នកផ្គត់ផ្គង់</a></li>
-							<li><a href='<c:url value="productinfo"/>'>បញ្ចូលមុខទំនិញ</a></li>
-							<li><a href='<c:url value="income"/>'>បញ្ចូលចំណូលផ្សេងៗ</a></li>
-							<li><a href='<c:url value="expense"/>'>បញ្ចូលចំណាយផ្សេងៗ</a></li>
-						</ul>
-					</li>
+						<li>
+							<a href="javascript:void(0);" data-toggle="collapse" data-target="#table_dr"><i class="icon-grid mr-10"></i>ផ្នែកនាំទំនិញចូល<span class="pull-right"><i class="fa fa-fw fa-angle-down"></i></span></a>
+							<ul id="table_dr" class="collapse collapse-level-1">
+								<li><a href='<c:url value="capture"/>'>ទំនិញនាំចូល</a></li>
+								<li><a href='<c:url value="capturelist"/>'>បញ្ជីទំនិញនាំចូល</a></li>
+	
+							</ul>
+						</li>
+						
+						<li>
+							<a href="javascript:void(0);" data-toggle="collapse" data-target="#pages_dr"><i class="icon-grid mr-10"></i>ផ្នែកលក់ទំនិញ<span class="pull-right"><i class="fa fa-fw fa-angle-down"></i></span></a>
+							<ul id="pages_dr" class="collapse collapse-level-1">
+								<li><a href='<c:url value="customercapture"/>'>ទំនិញលក់ចេញ</a></li>
+								<li><a href='<c:url value="customercapturelist"/>'>បញ្ជីទំនិញលក់ចេញ</a></li>
+							</ul>
+						</li>
+						
+						<li>
+							<a href="javascript:void(0);" data-toggle="collapse" data-target="#maps_dr"><i class="icon-grid mr-10"></i>របាយការណ៍<span class="pull-right"><i class="fa fa-fw fa-angle-down"></i></span></a>
+							<ul id="maps_dr" class="collapse collapse-level-1">
+								<li><a href='<c:url value="supplierinvoicelist"/>'>បញ្ជីជំពាក់ក្រុមហ៊ុន</a></li>
+								<li><a href='<c:url value="customerinvoicelist"/>'>បញ្ជីអតិថិជនជំពាក់</a></li>
+							</ul>
+						</li>
+						
+						<li>
+							<a href="#" data-toggle="collapse" data-target="#dropdown_dr_lv1"><i class="icon-grid mr-10"></i>Tools<span class="pull-right"><i class="fa fa-fw fa-angle-down"></i></span></a>
+							<ul id="dropdown_dr_lv1" class="collapse collapse-level-1">
+								<li><a href='<c:url value="customer"/>'>បញ្ចូលអតិថិជន</a></li>
+								<li><a href='<c:url value="supplier"/>'>បញ្ចូលអ្នកផ្គត់ផ្គង់</a></li>
+								<li><a href='<c:url value="productinfo"/>'>បញ្ចូលមុខទំនិញ</a></li>
 					
-					<li>
-						<a href="#" data-toggle="collapse" data-target="#dropdown_dr_lv3"><i class="icon-grid mr-10"></i>View<span class="pull-right"><i class="fa fa-fw fa-angle-down"></i></span></a>
-						<ul id="dropdown_dr_lv3" class="collapse collapse-level-1">
-							<li><a href='<c:url value="customerlist"/>'>បញ្ជីអតិថិជន</a></li>
-							<li><a href='<c:url value="supplierlist"/>'>បញ្ជីអ្នកផ្គត់ផ្គង់</a></li>
-							<li><a href='<c:url value="supplierlist"/>'>បញ្ជីមុខទំនិញ</a></li>
-							<li><a href='<c:url value="supplierlist"/>'>បញ្ជីចំណូលផ្សេងៗ</a></li>
-							<li><a href='<c:url value="supplierlist"/>'>បញ្ជីចំណាយផ្សេងៗ</a></li>
-						</ul>
-					</li>
+							</ul>
+							
+						</li>
+						
+						<li>
+							<a href="#" data-toggle="collapse" data-target="#dropdown_dr_lv3"><i class="icon-grid mr-10"></i>View<span class="pull-right"><i class="fa fa-fw fa-angle-down"></i></span></a>
+							<ul id="dropdown_dr_lv3" class="collapse collapse-level-1">
+								<li><a href='<c:url value="customerlist"/>'>បញ្ជីអតិថិជន</a></li>
+								<li><a href='<c:url value="supplierlist"/>'>បញ្ជីអ្នកផ្គត់ផ្គង់</a></li>
+								<li><a href='<c:url value="productinfolist"/>'>បញ្ជីមុខទំនិញ</a></li>
+								
+							</ul>
+						</li>
+   
+	   					<li>
+							<a href="javascript:void(0);" data-toggle="collapse" data-target="#app_dr"><i class="icon-grid mr-10"></i>គ្រប់គ្រងអ្នកប្រើប្រាស់<span class="pull-right"><i class="fa fa-fw fa-angle-down"></i></span></a>
+							<ul id="app_dr" class="collapse collapse-level-1">
+								<li><a href='<c:url value="user"/>'>List of Users</a></li>
+							</ul>
+						</li>
+					</security:authorize>
 					
 				</ul>
 			</div>

@@ -59,7 +59,7 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 		
 		if (roles.contains("ROLE_ADMIN")) {
 			
-			return "/user";
+			return "/capture";
 			
 		} else if (roles.contains("ROLE_USER")) {
 			
@@ -78,7 +78,5 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 		this.redirectStrategy = redirectStrategy;
 	}
 
-	
 
-	
 }
