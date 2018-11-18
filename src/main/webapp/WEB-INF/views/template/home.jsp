@@ -47,61 +47,7 @@
 				<%-- <a href='<c:url value="home"/>'><img class="brand-img pull-left" src='<c:url value="/resources/designs/main/dist/img/logo"/>' alt="HengPhea Garas Station" style="color: white; font-size: 25px;"></a> --%>
 				<a href='<c:url value="home"/>'><span class ="brand-img pull-left" style="color: white; font-size: 25px;">HengPhea Garas Station</span></a>
 				<ul class="nav navbar-right top-nav pull-right">
-					<!-- <li>
-						<a href="javascript:void(0);" data-toggle="collapse" data-target="#site_navbar_search">
-						<i class="fa fa-search top-nav-icon"></i>
-						</a>
-					</li>
-					<li>
-						<a id="open_right_sidebar" href="javascript:void(0);"><i class="fa fa-cog top-nav-icon"></i></a>
-					</li> -->
-					<!-- <li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-th top-nav-icon"></i></a>
-						<ul class="dropdown-menu app-dropdown" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
-							<li>
-								<ul class="app-icon-wrap">
-									<li>
-										<a href="#" class="connection-item">
-										<i class="pe-7s-umbrella txt-info"></i>
-										<span class="block">weather</span>
-										</a>
-									</li>
-									<li>
-										<a href="#" class="connection-item">
-										<i class="pe-7s-mail-open-file txt-success"></i>
-										<span class="block">e-mail</span>
-										</a>
-									</li>
-									<li>
-										<a href="#" class="connection-item">
-										<i class="pe-7s-date txt-primary"></i>
-										<span class="block">calendar</span>
-										</a>
-									</li>
-									<li>
-										<a href="#" class="connection-item">
-										<i class="pe-7s-map txt-danger"></i>
-										<span class="block">map</span>
-										</a>
-									</li>
-									<li>
-										<a href="#" class="connection-item">
-										<i class="pe-7s-comment txt-warning"></i>
-										<span class="block">chat</span>
-										</a>
-									</li>
-									<li>
-										<a href="#" class="connection-item">
-										<i class="pe-7s-notebook"></i>
-										<span class="block">contact</span>
-										</a>
-									</li>
-								</ul>
-							</li>
-							<li class="divider"></li>
-							<li class="text-center"><a href="#">More</a></li>
-						</ul>
-					</li> -->
+					
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bell top-nav-icon"></i><span class="top-nav-icon-badge"><label for="getCounts"></label></span></a>
 						<ul class="dropdown-menu alert-dropdown" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
