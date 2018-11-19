@@ -80,7 +80,7 @@
 							</li> --%>
 							<li class="divider"></li>
 							<li>
-								<a href='<c:url value="login"/>'><i class="fa fa-fw fa-power-off"></i> Log Out</a>
+								<a href='<c:url value='/logout'/>'><i class="fa fa-fw fa-power-off"></i> Log Out</a>
 							</li>
 						</ul>
 					</li>
