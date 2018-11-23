@@ -24,6 +24,8 @@
 	<!-- Date time picker -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker3.min.css">
 	
+	<link href='<c:url value='/resources/sweetalert2/sweetalert2.min.css' />' rel="stylesheet" type="text/css"/>
+	
 	<!-- Custom CSS -->
 	<link rel="stylesheet" href='<c:url value="/resources/designs/main/dist/css/style.css"/>' type="text/css">
 	
@@ -465,6 +467,9 @@
 	<%-- <script type="text/javascript" src='<c:url value="/resources/js/bootpage.js"/>'> </script> --%>
 	<script type="text/javascript" src='<c:url value="/resources/js/jquery.bootpag.min.js"/>'> </script>
 	<!-- /Pagination -->
+	
+	<!-- sweet alert 2 -->
+	<script type="text/javascript" src='<c:url value="/resources/sweetalert2/sweetalert2.min.js"/>'> </script>
 	
 </body>
 </html>

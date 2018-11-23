@@ -17,10 +17,10 @@ public class UserListController {
 	private UserListService userListService;
 	
 	// Show user list page
-	@RequestMapping("/userlist")
+	/*@RequestMapping("/userlist")
 	public String getUserListPage(){
 		return "userlist";
-	}
+	}*/
 	
 	// Get data combo of userName
 	@RequestMapping(value="/api/userlistcomboname", method = RequestMethod.GET)

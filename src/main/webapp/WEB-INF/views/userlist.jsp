@@ -13,7 +13,7 @@
 		<!-- select2 CSS -->
 		<link rel="stylesheet" href='<c:url value="/resources/designs/main/vendors/bower_components/select2/dist/css/select2.min.css"/>' type="text/css">
 		
-		<script src="Scripts/jquery-1.3.2.js" type="text/javascript"></script>
+		<!-- <script src="Scripts/jquery-1.3.2.js" type="text/javascript"></script> -->
 		<!-- Format date insert into database -->
 		<script type="text/javascript" src='<c:url value="/resources/validation/moment.min.js"/>'></script>
 		
@@ -112,9 +112,7 @@
 											        <div class="form-group">
 											        	<label class="control-label mb-10">ឈ្មោះអ្នកប្រើប្រាស់</label>
 											        	<div class="form-group has-success">
-															<select class="form-control select2" id="cboUserCode">
-																<option value="all">Show All</option>
-															</select>
+															<input type="text" id="texSearch" class="form-control" placeholder="ឈ្មោះអ្នកប្រើប្រាស់">
 														</div>
 											        </div>
 											    </div>
@@ -130,6 +128,25 @@
 														</div>
 											        </div>
 											    </div>
+											    
+											    <div class="col-sm-1">
+											        <div class="form-group">
+											        	<div style="margin-top: 30px;"></div>
+											        	<div class="form-group has-success">
+															<a title='edit status'  href='<c:url value='/userForm'/>' class='btn btn-success btn-sm'>Add</a>
+														</div>
+											        </div>
+											    </div>
+											    
+											<%--  <div class="pull-right">
+												<a href='<c:url value="/userlist"/>'>
+													<button class="btn btn-primary btn-rounded btn-icon left-icon"> 
+														<i class="ti-menu-alt "></i> 
+														<span>បញ្ជីអ្នកប្រើប្រាស់</span>
+													</button>
+												</a>
+											</div> --%>
+											    
 												<!--/span-->
 												
 												<%-- <div class="col-sm-1">
@@ -178,20 +195,19 @@
 																		<table data-toggle="table" class="table table-hover">
 																			<thead style="background-color: rgb(86, 111, 201);">
 																				<tr>
-																					<th class="txt-light">លរ</th>
 																					<th class="txt-light">លេខកូដ</th>
 																					<th class="txt-light">ឈ្មោះអ្នកប្រើប្រាស់</th>
-																					<th class="txt-light">នាមត្រកូល</th>
-																					<th class="txt-light">នាមខ្លួន</th>
 																					<th class="txt-light">លេខទូរស័ព្ទ</th>
 																					<th class="txt-light">អាស័យដ្ឋាន</th>
 																					<th class="txt-light">លុបអ្នកប្រើប្រាស់</th>
+																					<th class="txt-light">Action</th>
 																				</tr>
 																			</thead>
 																			
 																			<tbody id="tblCustomers" style="color: black;"></tbody>
 																			
 																		</table>
+																		<div class="text-center" style="margin: 0px 0;" id="pagination"></div>
 																	</div>
 																</div>
 																<!--/span-->
@@ -333,16 +349,180 @@
 		    </div>
 		    <!-- End of delete record -->
 	    	
-		<script type="text/javascript" src='<c:url value="/resources/js/userlist.js"/>'> </script>
+		<%-- <script type="text/javascript" src='<c:url value="/resources/js/userlist.js"/>'> </script> --%>
 		
 		<!-- JavaScripts -->
 		<!-- Select2 JavaScript -->
 		<script type="text/javascript" src='<c:url value="/resources/designs/main/vendors/bower_components/select2/dist/js/select2.full.min.js"/>'> </script>
 		<!-- Form Advance Init JavaScript -->
-		<script type="text/javascript" src='<c:url value="/resources/designs/main/dist/js/form-advance-data.js"/>'> </script>
+		<%-- <script type="text/javascript" src='<c:url value="/resources/designs/main/dist/js/form-advance-data.js"/>'> </script> --%>
 		
 		<!-- Bootstrap Datetimepicker JavaScript -->
 		<script type="text/javascript" src='<c:url value="/resources/designs/main/vendors/bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"/>'> </script>
 		
+		
+	
+		<script type="text/javascript">
+	var page = {
+		limit		:	5,
+		offset		:	1,
+		pageNumber	:	0,
+		currentPage	:	1,
+		url			:	"<c:url value='/'/>",
+		
+		init	:	function() {
+			page.initInterface();
+			page.initData();
+			page.initEvent();
+		},
+		
+		initInterface	:	function() {
+			$("#btnSearch").attr("disabled", true);
+		},
+		
+		initData	:	function() {
+			page.list(page.offset);
+		},
+		initEvent	:	function() {
+			//search event
+			 $("#texSearch").keypress(function(e){
+				if( this.value.length > 1 && e.keyCode == 13 ){
+					page.list(page.offset);				
+				}
+			}).keyup(function(e){
+				if( this.value.length >= 1 ){
+					$("#btnSearch").removeAttr('disabled');
+				}else{
+					$("#btnSearch").attr('disabled', true);
+					page.list(page.offset);
+				}
+			}); 
+			
+			$("#btnSearch").click(function(){
+					page.list(page.offset);
+			});
+			
+			
+			//delete all
+			$("#deleteSelect").click(function(){
+				page.deleteProcess();
+			});
+			 
+		},
+		
+		list	:	function(offset) {
+			//alert("list"+offset);
+			var key = ($("#texSearch").val() == "")? null:$("#texSearch").val();
+			$.ajax({
+	    		url 		: page.url+'/userlist/'+offset+'/'+page.limit+'/'+key,
+	            type 		: 'get',
+	            async		: true,
+	            contentType : 'application/json;charset=utf-8',
+	            success 	: function(data) {
+				            	if(data.result == true) {
+				            		$("tbody").html(page.listDetail(data));
+				            		//console.log(data);
+				            		page.pageNumber		=	data.pagination.totalPage;
+				            		page.pagination();
+				            	} else {
+				            		 $('#tbody').html('');
+			                         $('#pagination').html('');
+				            	}
+	            },
+	            error 		: function(data) {
+	            	console.log("ERROR CONTROLLER..." + JSON.stringify(data));
+	            }
+	        });	
+			
+		},
+		
+		listDetail	:	function(data) {
+			var str="";
+			for(var i=0; i<data.body.length ; i++) {
+				str +="<tr>"
+					+"<td>"+data.body[i].userCode+"</td>"
+					+"<td>"+data.body[i].username+"</td>"
+					+"<td>"+data.body[i].phone+"</td>"
+					+"<td>"+data.body[i].address+"</td>"
+					+"<td>"+data.body[i].enabled+"</td>"
+					+"<td >"
+					+"<a title='view status'  onclick=page.deleteProcess('"+data.body[i].userCode+"') class='btn btn-danger btn-sm'>Delete</a> &nbsp;"
+					+"<a title='edit status'  href='"+page.url+'user/edit/'+data.body[i].id+"' class='btn btn-success btn-sm'>Edit</a> &nbsp;"              
+					+"<td>"
+				+"</tr>" ;
+			}
+			return str;
+		},
+		
+		pagination	:	function() {
+			$('#pagination').bootpag({
+		        total 		: parseInt(page.pageNumber),
+		        maxVisible	: 5,
+		        leaps		: true,
+		        firstLastUse: true,
+		        first 		: '&#8592;',
+		        last 		: '&#8594;',
+		        wrapClass 	: 'pagination',
+		        activeClass : 'active',
+		        disabledClass: 'disabled',
+		        nextClass 	: 'next',
+		        prevClass 	: 'prev',
+		        lastClass 	: 'last',
+		        firstClass 	: 'first'
+		    }).on("page", function(event, num) {
+		    		page.loadPagination(parseInt(num));
+					page.offset = num;
+		    });
+		}, 
+		
+		//if I check in bootpag it not work
+		loadPagination	:	function(num) {
+			if(page.currentPage != num){
+				//alert(num);
+				page.currentPage = num;
+				page.list(num);
+			}
+		},
+		
+		
+		deleteProcess	: 	function(id) {
+			swal({
+				  title 			: 'Are you sure?',
+				  text 				: "You won't be able to revert this!",
+				  type 				: 'warning',
+				  showCancelButton 	: true,
+				  confirmButtonColor: '#3085d6',
+				  cancelButtonColor : '#d33',
+				  confirmButtonText : 'Yes, delete it!'
+				}).then(function () {
+					
+					if (id != "") {
+						 $.ajax({  
+			                    url 	: page.url+'/user/delete/'+id,
+			                    type 	:'delete',
+			                    contentType: 'application/json;charset=utf-8', 
+			                    success : function(data) { 
+			                            if(data.result ==  true ) {
+			                            	page.list(page.offset);
+			                                swal(
+												    'Deleted!',
+												    'Your file has been deleted.',
+												    'success'
+												  )
+			                            }
+			                       },  
+			                    error: function(data) {
+			                    	console.log("ERROR CONTROLLER..." + JSON.stringify(data));
+			                    }
+			                }); 
+					}else {
+						swal('Oops...', 'ID went wrong!','error')
+					} 
+					
+				})
+		}
+	};
+	page.init();
+</script>
 	</body>
 </html>

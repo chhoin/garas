@@ -56,14 +56,14 @@
 									<div class="pull-left">
 										<h4 class="panel-title txt-dark" style="font-size: 16px;">បញ្ចូលអ្នកប្រើប្រាស់</h4>
 									</div>
-									<div class="pull-right">
+									<%-- <div class="pull-right">
 										<a href='<c:url value="/userlist"/>'>
 											<button class="btn btn-primary btn-rounded btn-icon left-icon"> 
 												<i class="ti-menu-alt "></i> 
 												<span>បញ្ជីអ្នកប្រើប្រាស់</span>
 											</button>
 										</a>
-									</div>
+									</div> --%>
 									<div class="clearfix"></div>
 								</div>
 								
@@ -71,61 +71,54 @@
 									<div class="panel-body">
 										<div class="row">
 											<div class="col-sm-12 col-xs-12">
+											
 												<div class="form-wrap">
-													<form action="#">
+													<form action="<c:url value='/user/${action}'/>" method="post" >
 														<div class="form-body">
 															<h6 class="txt-dark capitalize-font" style="font-size: 14px;" style="font-weight: bold; font-size: 16px; color: #566fc9;"><i class="ti-menu-alt mr-10"></i>បញ្ចូលព៍ត៌មានអ្នកប្រើប្រាស់</h6>
 															<hr>
+															
 															<div class="row">
 																<div class="col-md-4">
 																	<div class="form-group">
 																		<label class="control-label mb-10">ឈ្មោះអ្នកប្រើប្រាស់</label>
+																		
 																		<div class="form-group has-success">
-																			<input type="text" id="txtUserName" class="form-control" placeholder="ឈ្មោះអ្នកប្រើប្រាស់">
+																			<input type="text" id="username" value="${user.username }" class="form-control" placeholder="ឈ្មោះអ្នកប្រើប្រាស់">
+																			<!-- <span class="help-block"> This is inline help </span>  -->
+																		</div>
+																	</div>
+																	<div class="form-group">
+																		<label class="control-label mb-10">លេខសម្ងាត់ <span class ="star"> ***</span></label>
+																		<div class="form-group has-success">
+																			<input type="password" id="password" value="${user.password }" class="form-control" placeholder="ឈ្មោះប្រើប្រាស់">
 																			<!-- <span class="help-block"> This is inline help </span>  -->
 																		</div>
 																	</div>
 																</div>
 																<div class="col-sm-4">
-															        <div class="form-group">
-															        	<label class="control-label mb-10">ថ្ងៃ ខែ ឆ្នាំ</label>
-															            <div class='input-group has-success' id='datetimepicker10'>
-															                <input type='text' id = "txtDate" class="form-control" placeholder="DD-MM-YYYY" />
-															                <span class="input-group-addon">
-															                    <span class="glyphicon glyphicon-calendar">
-															                    </span>
-															                </span>
-															            </div>
-															        </div>
-															    </div>
-															    <script type="text/javascript">
-															        $(function () {
-															            $('#datetimepicker10').datetimepicker({
-															                format: 'DD-MM-YYYY'
-															            });
-															        });
-															    </script>
-																<!--/span-->
-															</div>
-															<!-- /Row -->
-															<div class="row">
-																																<!--/span-->
-																<div class="col-md-4">
-																	<div class="form-group">
-																		<label class="control-label mb-10">លេខសម្ងាត់ <span class ="star"> ***</span></label>
+															       <div class="form-group">
+																		<label class="control-label mb-10">លេខទូស័ព្ទ <span class ="star"> ***</span></label>
 																		<div class="form-group has-success">
-																			<input type="password" id="txtPassword" class="form-control" placeholder="ឈ្មោះប្រើប្រាស់">
-																			<!-- <span class="help-block"> This is inline help </span>  -->
+																			<input type="text" id="phone" value="${user.phone }" class="form-control" placeholder="បញ្ជូលលេខសម្ងាត់ម្តងទៀត">
 																		</div>
 																	</div>
-																</div>
+																	<div class="form-group">
+																		<label class="control-label mb-10">អាស័យដ្ធាន <span class ="star"> ***</span></label>
+																		<div class="form-group has-success">
+																			<input type="text" id="address" value="${user.address }" class="form-control" placeholder="បញ្ជូលលេខសម្ងាត់ម្តងទៀត">
+																		</div>
+																	</div>
+															    </div>
+															   
 																<!--/span-->
 																
 																<div class="col-md-4">
 																	<div class="form-group">
-																		<label class="control-label mb-10">បញ្ជូលលេខសម្ងាត់ម្តងទៀត  <span class ="star"> ***</span></label>
+																		<label class="control-label mb-10"> Control Page <span class ="star"> ***</span></label>
 																		<div class="form-group has-success">
-																			<input type="password" id="txtComfirmPassword" class="form-control" placeholder="បញ្ជូលលេខសម្ងាត់ម្តងទៀត">
+																			
+																			
 																		</div>
 																	</div>
 																</div>
@@ -133,19 +126,10 @@
 															</div>
 															<!-- /Row -->
 															
-															<div class="row">
-																<div class="col-md-12">
-																	<div class="form-group">
-																		<label class="control-label mb-10">កំណត់ចំណាំ</label>
-																		<div class="form-group has-success">
-																			<textarea class="form-control" id = "txtDes" rows="3"​ placeholder="កំណត់ចំណាំ"></textarea>
-																			<!-- <span class="help-block"> This is inline help </span>  -->
-																		</div>
-																	</div>
-																</div>
-																<!--/span-->
-															</div>
-															<!-- /Row -->
+														</div>
+														
+														<div class="col-xs-12">
+															<p class="text-center">${message}</p>
 														</div>
 														
 														<!-- <div class="seprator-block"></div> -->
@@ -159,8 +143,11 @@
 																	</div>
 																</div>
 															</div>
+								
 													</form>
+													
 												</div>
+												
 											</div>
 										</div>
 									</div>

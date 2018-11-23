@@ -51,7 +51,62 @@
 		AND
 			U.username = #{userName}
 	</select>
+	
+	<select id="countSearch" resultType="Long" >
+		SELECT
+			COUNT(*)
+		FROM
+			tblUser 
+		WHERE
+			enabled = '1'
+		<if test="keyword != 'null'">
+		AND
+			( LOWER(userName) LIKE LOWER('%${keyword}%')
+			OR LOWER(phone) LIKE LOWER('%${keyword}%'))
+		</if>
+	</select>
 
+	<select id="list" resultType="UserDTO" parameterType="Pagination">
+	    SELECT
+			*
+		FROM
+			tblUser
+		WHERE
+			enabled = '1'
+		<if test="keySearch != 'null'">
+		AND
+			(  LOWER(userName) LIKE LOWER('%${keySearch}%')
+			OR LOWER(phone) LIKE LOWER('%${keySearch}%'))
+		</if>
+		ORDER BY userCode DESC
+		OFFSET #{begin}  ROWS
+		FETCH NEXT #{item} ROWS ONLY;
+	</select>
+	
+	<update id="delete" >
+		UPDATE	tblUser
+		SET			
+			enabled	= '0'
+		WHERE		
+			userCode = #{id}
+	</update>
+	
+	<select id="detail" resultType="UserDTO">
+		SELECT
+			*
+		FROM
+			tblUser
+		WHERE
+			enabled	= '1'
+		AND
+			userCode = #{id}
+	</select>
+	
+	<select id="listSubMenu" resultType="SubMenuDto">
+		SELECT * 
+		FROM tblSubMenu
+	</select>
+	
 
 	<!-- Check duplicate data -->
 	<select id="countById" resultType="Integer">
