@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.smart.garas.dto.Pagination;
 import com.smart.garas.dto.ResponseMessage;
+import com.smart.garas.dto.SubMenuDto;
+import com.smart.garas.dto.UserDataDto;
 import com.smart.garas.dto.UserDto;
 import com.smart.garas.service.UserService;
 
@@ -101,7 +103,7 @@ public class UserController {
 				 .addAttribute("action"		,	"store")
 				 .addAttribute("menu"		,	userService.listSubMenu())
 				 .addAttribute("edit"		,	false)
-				 .addAttribute("user"		,	new UserDto());
+				 .addAttribute("user"		,	new UserDataDto() );
 		
 		return "userForm";
 	}
@@ -116,27 +118,52 @@ public class UserController {
 	 * @return
 	 */
 	@RequestMapping(value={"/user/store"}, method = RequestMethod.POST)
-	public String store( ModelMap m, UserDto user, HttpServletRequest request) {
+	public String store( ModelMap m, UserDataDto user, HttpServletRequest request) {
 		
 		try {
+			String userCode = "USER-"+userService.lastUserCode();
 			
 			user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
+			user.setUsercode(userCode);
 			
-			if (userService.store(user)) {
+			//First insert user information
+			boolean insertUser = userService.store(user);
+			
+			//Second insert user role
+			boolean insertUserRole = userService.storeUserRole(userCode);
+			
+			//Third insert user assign menu
+			ArrayList<SubMenuDto> menuList = userService.listSubMenu();
+			for (SubMenuDto subMenuDto : menuList) {
+				userService.storeUserAssMenu(subMenuDto.getMenuId().toString(), userCode);
+			}
+			boolean insertUserAssMenu = userService.updateUserAssMenu(user.getSubMenu(), userCode);
+					
+			if (insertUser && insertUserRole && insertUserAssMenu ) {
 				m.addAttribute("title"		,	"Add User" )
 				 .addAttribute("message"	,	"<div class='alert alert-success'> <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Insert Success</strong>. </div>")
 				 .addAttribute("action"		,	"store")
+				 .addAttribute("menu"		,	userService.listSubMenu())
 				 .addAttribute("edit"		,	false)
 				 .addAttribute("user"		,	new UserDto());
 				
 			} else {
+				user.setPassword("");
 				m.addAttribute("title"		,	"Add User" )
 				.addAttribute("message"		,	"<div class='alert alert-danger'> <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Insert Fail!</strong>. </div>")
 				 .addAttribute("action"		,	"store")
+				 .addAttribute("menu"		,	userService.listSubMenu())
 				 .addAttribute("edit"		,	false)
 				 .addAttribute("user"		, 	user);
 			}
 		} catch (Exception e) {
+			user.setPassword("");
+			m.addAttribute("title"		,	"Add User" )
+			.addAttribute("message"		,	"<div class='alert alert-danger'> <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Insert Fail!</strong>. </div>")
+			 .addAttribute("action"		,	"store")
+			 .addAttribute("menu"		,	userService.listSubMenu())
+			 .addAttribute("edit"		,	false)
+			 .addAttribute("user"		, 	user);
 			logger.error(e.getMessage(), e);
 		}
 		return "userForm";

@@ -115,58 +115,65 @@
 					<security:authentication var="menus" property="principal.menus" />
 				
 					<security:authorize access="hasAnyRole('ROLE_USER')">
-   						<li>
+					
+					
+						
+						<li>
 							<a href="javascript:void(0);" data-toggle="collapse" data-target="#table_dr"><i class="icon-grid mr-10"></i>ផ្នែកនាំទំនិញចូល<span class="pull-right"><i class="fa fa-fw fa-angle-down"></i></span></a>
 							<ul id="table_dr" class="collapse collapse-level-1">
 								<c:forEach items="${menus}" var="item">
 								    <c:if test="${item.menu == '1' }">
 								    	<li><a href='<c:url value="${item.menuValue}"/>'>${item.menuName}</a></li>
 								    </c:if>
-								</c:forEach>					
+								</c:forEach>
 							</ul>
 						</li>
 						
 						<li>
-							<a href="javascript:void(0);" data-toggle="collapse" data-target="#table_dr"><i class="icon-grid mr-10"></i>ផ្នែកលក់ទំនិញ<span class="pull-right"><i class="fa fa-fw fa-angle-down"></i></span></a>
-							<ul id="table_dr" class="collapse collapse-level-1">
+							<a href="javascript:void(0);" data-toggle="collapse" data-target="#pages_dr"><i class="icon-grid mr-10"></i>ផ្នែកលក់ទំនិញ<span class="pull-right"><i class="fa fa-fw fa-angle-down"></i></span></a>
+							<ul id="pages_dr" class="collapse collapse-level-1">
 								<c:forEach items="${menus}" var="item">
 								    <c:if test="${item.menu == '2' }">
 								    	<li><a href='<c:url value="${item.menuValue}"/>'>${item.menuName}</a></li>
 								    </c:if>
-								</c:forEach>					
+								</c:forEach>	
 							</ul>
 						</li>
 						
+						
 						<li>
-							<a href="javascript:void(0);" data-toggle="collapse" data-target="#table_dr"><i class="icon-grid mr-10"></i>របាយការណ៍<span class="pull-right"><i class="fa fa-fw fa-angle-down"></i></span></a>
-							<ul id="table_dr" class="collapse collapse-level-1">
+							<a href="javascript:void(0);" data-toggle="collapse" data-target="#maps_dr"><i class="icon-grid mr-10"></i>របាយការណ៍<span class="pull-right"><i class="fa fa-fw fa-angle-down"></i></span></a>
+							<ul id="maps_dr" class="collapse collapse-level-1">
 								<c:forEach items="${menus}" var="item">
 								    <c:if test="${item.menu == '3' }">
 								    	<li><a href='<c:url value="${item.menuValue}"/>'>${item.menuName}</a></li>
 								    </c:if>
-								</c:forEach>					
+								</c:forEach>	
 							</ul>
 						</li>
 						
+						
 						<li>
-							<a href="javascript:void(0);" data-toggle="collapse" data-target="#table_dr"><i class="icon-grid mr-10"></i>Tools<span class="pull-right"><i class="fa fa-fw fa-angle-down"></i></span></a>
-							<ul id="table_dr" class="collapse collapse-level-1">
+							<a href="#" data-toggle="collapse" data-target="#dropdown_dr_lv1"><i class="icon-grid mr-10"></i>Tools<span class="pull-right"><i class="fa fa-fw fa-angle-down"></i></span></a>
+							<ul id="dropdown_dr_lv1" class="collapse collapse-level-1">
 								<c:forEach items="${menus}" var="item">
 								    <c:if test="${item.menu == '4' }">
 								    	<li><a href='<c:url value="${item.menuValue}"/>'>${item.menuName}</a></li>
 								    </c:if>
-								</c:forEach>					
+								</c:forEach>
 							</ul>
 						</li>
 						
+						
 						<li>
-							<a href="javascript:void(0);" data-toggle="collapse" data-target="#table_dr"><i class="icon-grid mr-10"></i>View<span class="pull-right"><i class="fa fa-fw fa-angle-down"></i></span></a>
-							<ul id="table_dr" class="collapse collapse-level-1">
+							<a href="#" data-toggle="collapse" data-target="#dropdown_dr_lv3"><i class="icon-grid mr-10"></i>View<span class="pull-right"><i class="fa fa-fw fa-angle-down"></i></span></a>
+							<ul id="dropdown_dr_lv3" class="collapse collapse-level-1">
 								<c:forEach items="${menus}" var="item">
 								    <c:if test="${item.menu == '5' }">
 								    	<li><a href='<c:url value="${item.menuValue}"/>'>${item.menuName}</a></li>
 								    </c:if>
-								</c:forEach>					
+								</c:forEach>
+								
 							</ul>
 						</li>
 						

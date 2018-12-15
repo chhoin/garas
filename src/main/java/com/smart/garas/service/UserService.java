@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.smart.garas.dto.Pagination;
 import com.smart.garas.dto.SubMenuDto;
+import com.smart.garas.dto.UserDataDto;
 import com.smart.garas.dto.UserDto;
 
 
@@ -22,7 +23,15 @@ public interface UserService {
 	
 	public ArrayList<UserDto> list(Pagination page);
 	
-	public boolean store(UserDto user);
+	public Integer lastUserCode();
+	
+	public boolean store(UserDataDto user);
+	
+	public boolean storeUserRole(@Param("userCode") String userCode);
+	
+	public boolean storeUserAssMenu( @Param("menuId") String menuId, @Param("userCode") String userCode);
+	
+	public boolean updateUserAssMenu(@Param("id") String[] id, @Param("userCode") String userCode);
 	
 	public boolean update(UserDto user);
 	

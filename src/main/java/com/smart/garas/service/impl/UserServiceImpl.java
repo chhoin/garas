@@ -2,6 +2,7 @@ package com.smart.garas.service.impl;
 
 import java.util.ArrayList;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.smart.garas.dao.UserDao;
 import com.smart.garas.dto.Pagination;
 import com.smart.garas.dto.SubMenuDto;
+import com.smart.garas.dto.UserDataDto;
 import com.smart.garas.dto.UserDto;
 import com.smart.garas.service.UserService;
 
@@ -44,7 +46,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public boolean store(UserDto user) {
+	public boolean store(UserDataDto user) {
 		return userDao.store(user);
 	}
 
@@ -66,5 +68,25 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public ArrayList<SubMenuDto> listSubMenu() {
 		return userDao.listSubMenu();
+	}
+
+	@Override
+	public Integer lastUserCode() {
+		return userDao.lastUserCode();
+	}
+
+	@Override
+	public boolean storeUserRole(String userCode) {
+		return userDao.storeUserRole(userCode);
+	}
+
+	@Override
+	public boolean storeUserAssMenu(String menuId, String userCode) {
+		return userDao.storeUserAssMenu(menuId, userCode);
+	}
+
+	@Override
+	public boolean updateUserAssMenu(String[] id,String userCode) {
+		return userDao.updateUserAssMenu(id, userCode);
 	}
 }

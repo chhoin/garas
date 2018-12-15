@@ -84,14 +84,14 @@
 																		<label class="control-label mb-10">ឈ្មោះអ្នកប្រើប្រាស់</label>
 																		
 																		<div class="form-group has-success">
-																			<input type="text" id="username" value="${user.username }" class="form-control" placeholder="ឈ្មោះអ្នកប្រើប្រាស់">
+																			<input type="text" name="username" value="${user.username }" class="form-control" placeholder="ឈ្មោះអ្នកប្រើប្រាស់">
 																			<!-- <span class="help-block"> This is inline help </span>  -->
 																		</div>
 																	</div>
 																	<div class="form-group">
 																		<label class="control-label mb-10">លេខសម្ងាត់ <span class ="star"> ***</span></label>
 																		<div class="form-group has-success">
-																			<input type="password" id="password" value="${user.password }" class="form-control" placeholder="ឈ្មោះប្រើប្រាស់">
+																			<input type="password" name="password" value="${user.password }" class="form-control" placeholder="ឈ្មោះប្រើប្រាស់">
 																			<!-- <span class="help-block"> This is inline help </span>  -->
 																		</div>
 																	</div>
@@ -100,13 +100,13 @@
 															       <div class="form-group">
 																		<label class="control-label mb-10">លេខទូស័ព្ទ <span class ="star"> ***</span></label>
 																		<div class="form-group has-success">
-																			<input type="text" id="phone" value="${user.phone }" class="form-control" placeholder="បញ្ជូលលេខសម្ងាត់ម្តងទៀត">
+																			<input type="text" name="phone" value="${user.phone }" class="form-control" placeholder="បញ្ជូលលេខសម្ងាត់ម្តងទៀត">
 																		</div>
 																	</div>
 																	<div class="form-group">
 																		<label class="control-label mb-10">អាស័យដ្ធាន <span class ="star"> ***</span></label>
 																		<div class="form-group has-success">
-																			<input type="text" id="address" value="${user.address }" class="form-control" placeholder="បញ្ជូលលេខសម្ងាត់ម្តងទៀត">
+																			<input type="text" name="address" value="${user.address }" class="form-control" placeholder="បញ្ជូលលេខសម្ងាត់ម្តងទៀត">
 																		</div>
 																	</div>
 															    </div>
@@ -116,9 +116,42 @@
 																<div class="col-md-4">
 																	<div class="form-group">
 																		<label class="control-label mb-10"> Control Page <span class ="star"> ***</span></label>
-																		<div class="form-group has-success">
+																		<div class="form-group has-success" >
+																			<span class="label label-primary">ផ្នែកនាំទំនិញចូល</span></br>
+																			<c:forEach items="${menu}" var="item">
+																				<c:if test="${item.menu == '1' }">
+																					<label><input type="checkbox" checked name="subMenu" value="${item.menuId}">${item.menuName}</label></br>
+																				</c:if>
+																			</c:forEach>
 																			
+																			<span class="label label-primary">ផ្នែកលក់ទំនិញ</span></br>
+																			<c:forEach items="${menu}" var="item">
+																				<c:if test="${item.menu == '2' }">
+																					<label><input type="checkbox" checked name="subMenu" value="${item.menuId}">${item.menuName}</label></br>
+																				</c:if>
+																			</c:forEach>
 																			
+																			<span class="label label-primary">របាយការណ៍</span></br>
+																			<c:forEach items="${menu}" var="item">
+																				<c:if test="${item.menu == '3' }">
+																					<label><input type="checkbox" checked name="subMenu" value="${item.menuId}">${item.menuName}</label></br>
+																				</c:if>
+																			</c:forEach>
+																			
+																			<span class="label label-primary">Tools</span></br>
+																			<c:forEach items="${menu}" var="item">
+																				<c:if test="${item.menu == '4' }">
+																					<label><input type="checkbox" checked name="subMenu" value="${item.menuId}">${item.menuName}</label></br>
+																				</c:if>
+																			</c:forEach>
+																			
+																			<span class="label label-primary">View</span></br>
+																			<c:forEach items="${menu}" var="item">
+																				<c:if test="${item.menu == '5' }">
+																					<label><input type="checkbox" checked name="subMenu" value="${item.menuId}">${item.menuName}</label></br>
+																				</c:if>
+																			</c:forEach>	
+																				
 																		</div>
 																	</div>
 																</div>

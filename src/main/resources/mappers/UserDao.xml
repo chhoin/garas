@@ -107,6 +107,67 @@
 		FROM tblSubMenu
 	</select>
 	
+	<select id="lastUserCode" resultType="Integer">
+		SELECT TOP 1 ISNULL(SUBSTRING(userCode,6,7), 0)+1 FROM tblUser ORDER BY created DESC
+	</select>
+	
+	<insert id="store" parameterType="UserDataDto">
+ 		INSERT INTO tblUser(
+ 						userCode,
+						userName,
+						passWord,
+						enabled,
+						phone,
+						address,
+						created
+ 						)
+				VALUES	(
+						#{usercode},
+						#{username},
+						#{password},
+						1,
+						#{phone},
+						#{address},
+						GETDATE()
+					)
+    </insert>
+    
+    <insert id="storeUserRole" >
+ 		INSERT INTO tblUserRole(
+ 						userCode,
+						name
+ 						)
+				VALUES	(
+						#{userCode},
+						'ROLE_USER'
+					)
+    </insert>
+    
+     <insert id="storeUserAssMenu" >
+ 		INSERT INTO tblMenuAssign(
+ 						menuId,
+ 						userCode,
+						enable
+ 						)
+				VALUES	(
+						#{menuId},
+						#{userCode},
+						'0'
+					)
+    </insert>
+    
+    <update id="updateUserAssMenu" >
+		UPDATE	tblMenuAssign
+		SET			
+			enable			= '1'
+		WHERE	
+			userCode = #{userCode}	
+		AND menuId IN
+			<foreach collection="ids" item="id" open="(" separator="," close=")">
+				#{id}
+			</foreach>
+	</update>
+	
 
 	<!-- Check duplicate data -->
 	<select id="countById" resultType="Integer">
